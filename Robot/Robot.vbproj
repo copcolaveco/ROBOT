@@ -1,0 +1,373 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{A98A8D1C-B8C0-4406-ABD1-1459948FA354}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <StartupObject>Robot.My.MyApplication</StartupObject>
+    <RootNamespace>Robot</RootNamespace>
+    <AssemblyName>Robot</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>WindowsForms</MyType>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>C:\Users\Usduario\Desktop\RobotNuevo\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>8</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>false</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>Robot.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>Robot.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>12438C84FDD3BEB5AA24B96DA31C3D8F16906E86</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>Robot_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=12.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="MySql.Data, Version=6.2.2.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Windows.Forms" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ConexionMySql.vb" />
+    <Compile Include="ConexionMySQL_com.vb" />
+    <Compile Include="ConexionMySQL_comuy.vb" />
+    <Compile Include="ConexionMySQL_facturacion.vb" />
+    <Compile Include="ConexionMySQL_Florida.vb" />
+    <Compile Include="dAgroNutricionWeb_com.vb" />
+    <Compile Include="dAgroSuelosWeb_com.vb" />
+    <Compile Include="dAgua.vb" />
+    <Compile Include="dAguaWeb_com.vb" />
+    <Compile Include="dAmbientalSolicitud.vb" />
+    <Compile Include="dAmbientalWeb_com.vb" />
+    <Compile Include="dAntibiograma2.vb" />
+    <Compile Include="dAntibiogramaWeb_com.vb" />
+    <Compile Include="dBrucelosis.vb" />
+    <Compile Include="dBrucelosisLecheWeb_com.vb" />
+    <Compile Include="dCajas.vb" />
+    <Compile Include="dCajasWeb.vb" />
+    <Compile Include="dCalidad.vb" />
+    <Compile Include="dCalidadSolicitudMuestra.vb" />
+    <Compile Include="dCalidadWeb_com.vb" />
+    <Compile Include="dClient.vb" />
+    <Compile Include="dCliente.vb" />
+    <Compile Include="dClienteConvenio.vb" />
+    <Compile Include="dCompras.vb" />
+    <Compile Include="dControl.vb" />
+    <Compile Include="dControlAux.vb" />
+    <Compile Include="dControlInformesEfluentes.vb" />
+    <Compile Include="dControlInformesFQ.vb" />
+    <Compile Include="dControlInformesMicro.vb" />
+    <Compile Include="dControlInformesNutricion.vb" />
+    <Compile Include="dControlInformesSuelos.vb" />
+    <Compile Include="dControlLecheroWeb_com.vb" />
+    <Compile Include="dControlSolicitud.vb" />
+    <Compile Include="dCorreos.vb" />
+    <Compile Include="dCrioscopia_Control.vb" />
+    <Compile Include="dDepartamento.vb" />
+    <Compile Include="dEfluentesWeb_com.vb" />
+    <Compile Include="dEmpresaT.vb" />
+    <Compile Include="dEnvioCajas.vb" />
+    <Compile Include="dEsporulados.vb" />
+    <Compile Include="dEstadisticaCalidad.vb" />
+    <Compile Include="dEstados.vb" />
+    <Compile Include="dFactur.vb" />
+    <Compile Include="dFacturacion.vb" />
+    <Compile Include="dFrascosGestor.vb" />
+    <Compile Include="dIbc.vb" />
+    <Compile Include="dImpCalidad.vb" />
+    <Compile Include="dImpControl.vb" />
+    <Compile Include="dImpIbc.vb" />
+    <Compile Include="dInhibidores.vb" />
+    <Compile Include="dLactometrosWeb_com.vb" />
+    <Compile Include="dMeses.vb" />
+    <Compile Include="dMicotoxinasLeche.vb" />
+    <Compile Include="dMovCte.vb" />
+    <Compile Include="dMovCte2.vb" />
+    <Compile Include="dMovimientos.vb" />
+    <Compile Include="dMuestras.vb" />
+    <Compile Include="dNotificaciones.vb" />
+    <Compile Include="dNuevoAnalisis.vb" />
+    <Compile Include="dOtrosServiciosWeb_com.vb" />
+    <Compile Include="dPalWeb_com.vb" />
+    <Compile Include="dParasitologiaSolicitud.vb" />
+    <Compile Include="dParasitologiaWeb_com.vb" />
+    <Compile Include="dPatologiaWeb_com.vb" />
+    <Compile Include="dPedidos.vb" />
+    <Compile Include="dPedidosWeb.vb" />
+    <Compile Include="dPedidosWeb_com.vb" />
+    <Compile Include="dPreinformeCalidad.vb" />
+    <Compile Include="dPreinformeControl.vb" />
+    <Compile Include="dPreinformes.vb" />
+    <Compile Include="dProductor.vb" />
+    <Compile Include="dProductorWeb_com.vb" />
+    <Compile Include="dProveedores.vb" />
+    <Compile Include="dPsicrotrofos.vb" />
+    <Compile Include="dRelSolicitudMuestras.vb" />
+    <Compile Include="dResultado.vb" />
+    <Compile Include="dSaldos.vb" />
+    <Compile Include="dSerologiaWeb_com.vb" />
+    <Compile Include="dSinVisualizacion.vb" />
+    <Compile Include="dSolicitudAnalisis.vb" />
+    <Compile Include="dSolicitudNutricion.vb" />
+    <Compile Include="dSolicitudPAL.vb" />
+    <Compile Include="dSolicitudSuelos.vb" />
+    <Compile Include="dSolicitudWeb.vb" />
+    <Compile Include="dSubInforme.vb" />
+    <Compile Include="dSubproducto.vb" />
+    <Compile Include="dSubproductosWeb_com.vb" />
+    <Compile Include="dTecnicos.vb" />
+    <Compile Include="dTipoInforme.vb" />
+    <Compile Include="dUltimoNumero.vb" />
+    <Compile Include="dUsuarioGestor.vb" />
+    <Compile Include="Form1.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.Designer.vb">
+      <DependentUpon>Form1.vb</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormGraficasRC.Designer.vb">
+      <DependentUpon>FormGraficasRC.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormGraficasRC.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Module1.vb" />
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="pAgroNutricionWeb_com.vb" />
+    <Compile Include="pAgroSuelosWeb_com.vb" />
+    <Compile Include="pAgua.vb" />
+    <Compile Include="pAguaWeb_com.vb" />
+    <Compile Include="pAmbientalSolicitud.vb" />
+    <Compile Include="pAmbientalWeb_com.vb" />
+    <Compile Include="pAntibiograma2.vb" />
+    <Compile Include="pAntibiogramaWeb_com.vb" />
+    <Compile Include="pBrucelosis.vb" />
+    <Compile Include="pBrucelosisLecheWeb_com.vb" />
+    <Compile Include="pCajas.vb" />
+    <Compile Include="pCajasWeb.vb" />
+    <Compile Include="pCalidad.vb" />
+    <Compile Include="pCalidadSolicitudMuestra.vb" />
+    <Compile Include="pCalidadWeb_com.vb" />
+    <Compile Include="pClient.vb" />
+    <Compile Include="pCliente.vb" />
+    <Compile Include="pClienteConvenio.vb" />
+    <Compile Include="pCompras.vb" />
+    <Compile Include="pControl.vb" />
+    <Compile Include="pControlAux.vb" />
+    <Compile Include="pControlInformesEfluentes.vb" />
+    <Compile Include="pControlInformesFQ.vb" />
+    <Compile Include="pControlInformesMicro.vb" />
+    <Compile Include="pControlInformesNutricion.vb" />
+    <Compile Include="pControlInformesSuelos.vb" />
+    <Compile Include="pControlLecheroWeb_com.vb" />
+    <Compile Include="pControlSolicitud.vb" />
+    <Compile Include="pCorreos.vb" />
+    <Compile Include="pCrioscopia_Control.vb" />
+    <Compile Include="pDepartamento.vb" />
+    <Compile Include="pEfluentesWeb_com.vb" />
+    <Compile Include="pEmpresaT.vb" />
+    <Compile Include="pEnvioCajas.vb" />
+    <Compile Include="pEsporulados.vb" />
+    <Compile Include="pEstadisticaCalidad.vb" />
+    <Compile Include="pEstados.vb" />
+    <Compile Include="pFactur.vb" />
+    <Compile Include="pFacturacion.vb" />
+    <Compile Include="pIbc.vb" />
+    <Compile Include="pImpCalidad.vb" />
+    <Compile Include="pImpControl.vb" />
+    <Compile Include="pImpIbc.vb" />
+    <Compile Include="pInhibidores.vb" />
+    <Compile Include="pLactometrosWeb_com.vb" />
+    <Compile Include="pMeses.vb" />
+    <Compile Include="pMicotoxinasLeche.vb" />
+    <Compile Include="pMovCte.vb" />
+    <Compile Include="pMovCte2.vb" />
+    <Compile Include="pMuestras.vb" />
+    <Compile Include="pNuevoAnalisis.vb" />
+    <Compile Include="pOtrosServiciosWeb_com.vb" />
+    <Compile Include="pPalWeb_com.vb" />
+    <Compile Include="pParasitologiaSolicitud.vb" />
+    <Compile Include="pParasitologiaWeb_com.vb" />
+    <Compile Include="pPatologiaWeb_com.vb" />
+    <Compile Include="pPedidos.vb" />
+    <Compile Include="pPedidosWeb.vb" />
+    <Compile Include="pPedidosWeb_com.vb" />
+    <Compile Include="pPreinformeCalidad.vb" />
+    <Compile Include="pPreinformeControl.vb" />
+    <Compile Include="pPreinformes.vb" />
+    <Compile Include="pProductor.vb" />
+    <Compile Include="pProductorWeb_com.vb" />
+    <Compile Include="pProveedores.vb" />
+    <Compile Include="pPsicrotrofos.vb" />
+    <Compile Include="pRelSolicitudMuestras.vb" />
+    <Compile Include="pSaldos.vb" />
+    <Compile Include="pSerologiaWeb_com.vb" />
+    <Compile Include="pSinVisualizacion.vb" />
+    <Compile Include="pSolicitudAnalisis.vb" />
+    <Compile Include="pSolicitudNutricion.vb" />
+    <Compile Include="pSolicitudPAL.vb" />
+    <Compile Include="pSolicitudSuelos.vb" />
+    <Compile Include="pSolicitudWeb.vb" />
+    <Compile Include="pSubInforme.vb" />
+    <Compile Include="pSubproducto.vb" />
+    <Compile Include="pSubproductosWeb_com.vb" />
+    <Compile Include="pTecnicos.vb" />
+    <Compile Include="pTipoInforme.vb" />
+    <Compile Include="pUltimoNumero.vb" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormGraficasRC.resx">
+      <DependentUpon>FormGraficasRC.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="Robot_TemporaryKey.pfx" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 Client Profile %28x86 y x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

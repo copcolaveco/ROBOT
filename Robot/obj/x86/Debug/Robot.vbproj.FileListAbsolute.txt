@@ -1,0 +1,90 @@
+C:\Users\Usuario\Dropbox\Colaveco Robot\Robot\Robot\obj\x86\Debug\Robot.FormInicio.resources
+C:\Users\Usuario\Dropbox\Colaveco Robot\Robot\Robot\obj\x86\Debug\Robot.Resources.resources
+C:\Users\Usuario\Dropbox\Colaveco Robot\Robot\Robot\obj\x86\Debug\Robot.vbproj.GenerateResource.Cache
+C:\Users\Usuario\Dropbox\Colaveco Robot\Robot\Robot\obj\x86\Debug\Robot.vbprojResolveAssemblyReference.cache
+C:\Users\Usuario\Dropbox\Colaveco Robot\Robot\Robot\bin\Debug\Robot.exe
+C:\Users\Usuario\Dropbox\Colaveco Robot\Robot\Robot\bin\Debug\Robot.pdb
+C:\Users\Usuario\Dropbox\Colaveco Robot\Robot\Robot\bin\Debug\Robot.xml
+C:\Users\Usuario\Dropbox\Colaveco Robot\Robot\Robot\obj\x86\Debug\Robot.exe
+C:\Users\Usuario\Dropbox\Colaveco Robot\Robot\Robot\obj\x86\Debug\Robot.xml
+C:\Users\Usuario\Dropbox\Colaveco Robot\Robot\Robot\obj\x86\Debug\Robot.pdb
+Y:\Software\Colaveco Robot\Robot\Robot\obj\x86\Debug\Robot.exe
+Y:\Software\Colaveco Robot\Robot\Robot\obj\x86\Debug\Robot.xml
+Y:\Software\Colaveco Robot\Robot\Robot\obj\x86\Debug\Robot.pdb
+Y:\Software\Colaveco Robot\Robot\Robot\bin\Debug\Robot.exe
+Y:\Software\Colaveco Robot\Robot\Robot\bin\Debug\Robot.pdb
+Y:\Software\Colaveco Robot\Robot\Robot\bin\Debug\Robot.xml
+Y:\Software\Colaveco Robot\Robot\Robot\obj\x86\Debug\Robot.vbprojResolveAssemblyReference.cache
+Y:\Software\Colaveco Robot\Robot\Robot\obj\x86\Debug\Robot.FormInicio.resources
+Y:\Software\Colaveco Robot\Robot\Robot\obj\x86\Debug\Robot.Resources.resources
+Y:\Software\Colaveco Robot\Robot\Robot\obj\x86\Debug\Robot.vbproj.GenerateResource.Cache
+\\ROBOT\Colaveco Robot\Robot\Robot\obj\x86\Debug\Robot.exe
+\\ROBOT\Colaveco Robot\Robot\Robot\obj\x86\Debug\Robot.xml
+\\ROBOT\Colaveco Robot\Robot\Robot\obj\x86\Debug\Robot.pdb
+\\ROBOT\Colaveco Robot\Robot\Robot\obj\x86\Debug\Robot.vbprojResolveAssemblyReference.cache
+\\ROBOT\Colaveco Robot\Robot\Robot\obj\x86\Debug\Robot.FormInicio.resources
+\\ROBOT\Colaveco Robot\Robot\Robot\obj\x86\Debug\Robot.Resources.resources
+\\ROBOT\Colaveco Robot\Robot\Robot\obj\x86\Debug\Robot.vbproj.GenerateResource.Cache
+\\ROBOT\Colaveco Robot\Robot\Robot\bin\Debug\Robot.exe
+\\ROBOT\Colaveco Robot\Robot\Robot\bin\Debug\Robot.pdb
+\\ROBOT\Colaveco Robot\Robot\Robot\bin\Debug\Robot.xml
+C:\Users\Usuario\Desktop\Robot\Robot\obj\x86\Debug\Robot.exe
+C:\Users\Usuario\Desktop\Robot\Robot\obj\x86\Debug\Robot.xml
+C:\Users\Usuario\Desktop\Robot\Robot\obj\x86\Debug\Robot.pdb
+C:\Users\Usuario\Desktop\Robot\Robot\bin\Debug\Robot.exe
+C:\Users\Usuario\Desktop\Robot\Robot\bin\Debug\Robot.pdb
+C:\Users\Usuario\Desktop\Robot\Robot\bin\Debug\Robot.xml
+C:\Users\Usuario\Desktop\Robot\Robot\obj\x86\Debug\Robot.vbprojResolveAssemblyReference.cache
+C:\Users\Usuario\Desktop\Robot\Robot\obj\x86\Debug\Robot.FormInicio.resources
+C:\Users\Usuario\Desktop\Robot\Robot\obj\x86\Debug\Robot.Resources.resources
+C:\Users\Usuario\Desktop\Robot\Robot\obj\x86\Debug\Robot.vbproj.GenerateResource.Cache
+\\ROBOT\Colaveco Robot\Robot\Robot\obj\x86\Debug\Robot.FormGraficasRC.resources
+C:\Users\Pepo\Desktop\Colaveco Robot\Robot\Robot\obj\x86\Debug\Robot.exe
+C:\Users\Pepo\Desktop\Colaveco Robot\Robot\Robot\obj\x86\Debug\Robot.xml
+C:\Users\Pepo\Desktop\Colaveco Robot\Robot\Robot\obj\x86\Debug\Robot.pdb
+C:\Colaveco Robot\Robot\Robot\obj\x86\Debug\Robot.FormInicio.resources
+C:\Colaveco Robot\Robot\Robot\obj\x86\Debug\Robot.FormGraficasRC.resources
+C:\Colaveco Robot\Robot\Robot\obj\x86\Debug\Robot.Resources.resources
+C:\Colaveco Robot\Robot\Robot\obj\x86\Debug\Robot.vbproj.GenerateResource.Cache
+C:\Colaveco Robot\Robot\Robot\bin\Debug\Robot.exe
+C:\Colaveco Robot\Robot\Robot\bin\Debug\Robot.pdb
+C:\Colaveco Robot\Robot\Robot\bin\Debug\Robot.xml
+C:\Colaveco Robot\Robot\Robot\obj\x86\Debug\Robot.exe
+C:\Colaveco Robot\Robot\Robot\obj\x86\Debug\Robot.xml
+C:\Colaveco Robot\Robot\Robot\obj\x86\Debug\Robot.pdb
+C:\Users\Usduario\Documents\Versiones Robot\Produccion\DELTA400 a punto\Robot\obj\x86\Debug\Robot.exe
+C:\Users\Usduario\Documents\Versiones Robot\Produccion\DELTA400 a punto\Robot\obj\x86\Debug\Robot.xml
+C:\Users\Usduario\Documents\Versiones Robot\Produccion\DELTA400 a punto\Robot\obj\x86\Debug\Robot.pdb
+C:\Users\Usduario\Documents\Versiones Robot\Produccion\DELTA400 a punto\Robot\bin\Debug\Robot.exe
+C:\Users\Usduario\Documents\Versiones Robot\Produccion\DELTA400 a punto\Robot\bin\Debug\Robot.pdb
+C:\Users\Usduario\Documents\Versiones Robot\Produccion\DELTA400 a punto\Robot\bin\Debug\Robot.xml
+C:\Users\Usduario\Documents\Versiones Robot\Produccion\DELTA400 a punto\Robot\obj\x86\Debug\Robot.FormInicio.resources
+C:\Users\Usduario\Documents\Versiones Robot\Produccion\DELTA400 a punto\Robot\obj\x86\Debug\Robot.FormGraficasRC.resources
+C:\Users\Usduario\Documents\Versiones Robot\Produccion\DELTA400 a punto\Robot\obj\x86\Debug\Robot.Resources.resources
+C:\Users\Usduario\Documents\Versiones Robot\Produccion\DELTA400 a punto\Robot\obj\x86\Debug\Robot.vbproj.GenerateResource.Cache
+C:\Users\Usduario\Documents\Versiones Robot\Produccion\DELTA400 a punto\Robot\obj\x86\Debug\Robot.vbprojResolveAssemblyReference.cache
+C:\Users\Usduario\Documents\Versiones Robot\Produccion\Antibiograma reporte\Robot\obj\x86\Debug\Robot.exe
+C:\Users\Usduario\Documents\Versiones Robot\Produccion\Antibiograma reporte\Robot\obj\x86\Debug\Robot.xml
+C:\Users\Usduario\Documents\Versiones Robot\Produccion\Antibiograma reporte\Robot\obj\x86\Debug\Robot.pdb
+C:\Users\Usduario\Documents\Versiones Robot\Produccion\Antibiograma reporte\Robot\bin\Debug\Robot.exe
+C:\Users\Usduario\Documents\Versiones Robot\Produccion\Antibiograma reporte\Robot\bin\Debug\Robot.pdb
+C:\Users\Usduario\Documents\Versiones Robot\Produccion\Antibiograma reporte\Robot\bin\Debug\Robot.xml
+C:\Users\Usduario\Documents\Versiones Robot\Produccion\Antibiograma reporte\Robot\obj\x86\Debug\Robot.FormInicio.resources
+C:\Users\Usduario\Documents\Versiones Robot\Produccion\Antibiograma reporte\Robot\obj\x86\Debug\Robot.FormGraficasRC.resources
+C:\Users\Usduario\Documents\Versiones Robot\Produccion\Antibiograma reporte\Robot\obj\x86\Debug\Robot.Resources.resources
+C:\Users\Usduario\Documents\Versiones Robot\Produccion\Antibiograma reporte\Robot\obj\x86\Debug\Robot.vbproj.GenerateResource.Cache
+C:\Users\Usduario\Documents\Versiones Robot\Produccion\Antibiograma reporte\Robot\obj\x86\Debug\Robot.vbprojResolveAssemblyReference.cache
+C:\Users\Usduario\Documents\Robot\Robot\Robot\bin\Debug\Robot.exe.manifest
+C:\Users\Usduario\Documents\Robot\Robot\Robot\bin\Debug\Robot.application
+C:\Users\Usduario\Documents\Robot\Robot\Robot\bin\Debug\Robot.exe
+C:\Users\Usduario\Documents\Robot\Robot\Robot\bin\Debug\Robot.pdb
+C:\Users\Usduario\Documents\Robot\Robot\Robot\bin\Debug\Robot.xml
+C:\Users\Usduario\Documents\Robot\Robot\Robot\obj\x86\Debug\Robot.FormInicio.resources
+C:\Users\Usduario\Documents\Robot\Robot\Robot\obj\x86\Debug\Robot.FormGraficasRC.resources
+C:\Users\Usduario\Documents\Robot\Robot\Robot\obj\x86\Debug\Robot.Resources.resources
+C:\Users\Usduario\Documents\Robot\Robot\Robot\obj\x86\Debug\Robot.vbproj.GenerateResource.Cache
+C:\Users\Usduario\Documents\Robot\Robot\Robot\obj\x86\Debug\Robot.exe.manifest
+C:\Users\Usduario\Documents\Robot\Robot\Robot\obj\x86\Debug\Robot.application
+C:\Users\Usduario\Documents\Robot\Robot\Robot\obj\x86\Debug\Robot.exe
+C:\Users\Usduario\Documents\Robot\Robot\Robot\obj\x86\Debug\Robot.xml
+C:\Users\Usduario\Documents\Robot\Robot\Robot\obj\x86\Debug\Robot.pdb
