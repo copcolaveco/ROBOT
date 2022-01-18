@@ -892,7 +892,7 @@ Public Class FormInicio
                         Dim c As New dImpCalidad()
                         Do
                             sLine = objReader.ReadLine()
-                            If sLine <> " " Then
+                            If sLine <> " " And sLine <> "" Then
                                 If linea = 3 Then
                                     arraytext = Split(sLine, ";")
                                     If arraytext.Length < 11 Then
@@ -2256,8 +2256,8 @@ Public Class FormInicio
                             If Mid(sLine, 1, 2) <> ";;" Then ' controla fin de linea
                                 If linea >= 8 Then
                                     arraytext = Split(sLine, ";")
-                                    If arraytext.Length < 39 Then
-                                        arraytext = Split(sLine, ";")
+                                    If arraytext.Length < 2 Then
+                                        arraytext = Split(sLine, ",")
                                     End If
                                     If Trim(arraytext(1)) <> "" Then
                                         matricula = Trim(arraytext(1))
@@ -2888,7 +2888,7 @@ Public Class FormInicio
                             Try
                                 grasa = Trim(Mid(Texto, 18, 9))
                             Catch ex As Exception
-                                MsgBox("Error en archivo: " & file.Name & ", línea: " & cuentalinea & ", valor: Grasa")
+                                MsgBox("Error en archivo: " & file.Name & ", línea: " & cuentalinea & ", valor: Grasa", MsgBoxStyle.Critical)
                                 Exit Sub
                             End Try
                         Else
@@ -3357,6 +3357,9 @@ Public Class FormInicio
                         Else
                             Dim valorurea As Integer
                             valorurea = c.UREA * 0.466
+                            If valorurea > 20 Or valorurea < 9 Then
+                                x1hoja.Cells(fila, columna).interior.color = RGB(192, 192, 192)
+                            End If
                             x1hoja.Cells(fila, columna).formula = FormatNumber(valorurea, 0)
                             x1hoja.Cells(fila, columna).HorizontalAlignment = XlHAlign.xlHAlignCenter
                             x1hoja.Cells(fila, columna).Font.Size = 8
@@ -3676,6 +3679,9 @@ Public Class FormInicio
                             Else
                                 Dim valorurea As Integer
                                 valorurea = c.UREA * 0.466
+                                If valorurea > 20 Or valorurea < 9 Then
+                                    x1hoja.Cells(fila, columna).interior.color = RGB(192, 192, 192)
+                                End If
                                 x1hoja.Cells(fila, columna).formula = FormatNumber(valorurea, 0)
                                 x1hoja.Cells(fila, columna).HorizontalAlignment = XlHAlign.xlHAlignCenter
                                 x1hoja.Cells(fila, columna).Font.Size = 8
@@ -4223,6 +4229,9 @@ Public Class FormInicio
                             If c.UREA <> -1 Then
                                 Dim valorurea As Integer
                                 valorurea = c.UREA * 0.466
+                                If valorurea > 20 Or valorurea < 9 Then
+                                    x1hoja.Cells(fila, columna).interior.color = RGB(192, 192, 192)
+                                End If
                                 x1hoja.Cells(fila, columna).formula = valorurea
                                 x1hoja.Cells(fila, columna).HorizontalAlignment = XlHAlign.xlHAlignCenter
                                 x1hoja.Cells(fila, columna).Font.Size = 8
@@ -4663,13 +4672,13 @@ controlpdf2:
                     moverpdf()
 controlcsv2:
                     If nombre_pc = "ROBOT" Then
-                        subirFicheroCsv()
+                        'subirFicheroCsv()
                     End If
-                    existeCsv()
-                    If csv = 1 Then
-                        GoTo controlcsv2
-                    End If
-                    movertxt()
+                    'existeCsv()
+                    'If csv = 1 Then
+                    'GoTo controlcsv2
+                    'End If
+                    'movertxt()
                     modificarRegistro()
                     Dim fechaactual As Date = Now()
                     Dim _fecha As String
@@ -5054,17 +5063,19 @@ controlpdf:
                             subidopdf = 1
                             If pi.TIPO = 1 Then
 controltxt:
-                                If nombre_pc = "ROBOT" Then
-                                    subirFicheroCsv()
-                                End If
-                                existeCsv()
-                                If csv = 1 Then
-                                    GoTo controltxt
-                                End If
-                                If nombre_pc = "ROBOT" Then
-                                    movertxt()
-                                Else
-                                    movertxt_otrapc()
+                                If tipoinforme = 10 And userid = 6299 Then
+                                    If nombre_pc = "ROBOT" Then
+                                        subirFicheroCsv()
+                                    End If
+                                    existeCsv()
+                                    If csv = 1 Then
+                                        GoTo controltxt
+                                    End If
+                                    If nombre_pc = "ROBOT" Then
+                                        movertxt()
+                                    Else
+                                        movertxt_otrapc()
+                                    End If
                                 End If
                             End If
                             modificarRegistro()
@@ -5175,17 +5186,19 @@ controlpdf2:
                         subidopdf = 1
                         If pi.TIPO = 1 Then
 controltxt2:
-                            If nombre_pc = "ROBOT" Then
-                                subirFicheroCsv()
-                            End If
-                            existeCsv()
-                            If csv = 1 Then
-                                GoTo controltxt2
-                            End If
-                            If nombre_pc = "ROBOT" Then
-                                movertxt()
-                            Else
-                                movertxt_otrapc()
+                            If tipoinforme = 10 And userid = 6299 Then
+                                If nombre_pc = "ROBOT" Then
+                                    subirFicheroCsv()
+                                End If
+                                existeCsv()
+                                If csv = 1 Then
+                                    GoTo controltxt2
+                                End If
+                                If nombre_pc = "ROBOT" Then
+                                    movertxt()
+                                Else
+                                    movertxt_otrapc()
+                                End If
                             End If
                         End If
                         modificarRegistro()
@@ -5315,14 +5328,14 @@ controlpdf:
                             subidopdf = 1
                             If pi.TIPO = 1 Then
 controltxt:
-                                If nombre_pc = "ROBOT" Then
-                                    subirFicheroCsv()
-                                End If
-                                existeCsv()
-                                If csv = 1 Then
-                                    GoTo controltxt
-                                End If
-                                movertxt()
+                                'If nombre_pc = "ROBOT" Then
+                                '    subirFicheroCsv()
+                                'End If
+                                'existeCsv()
+                                'If csv = 1 Then
+                                '    GoTo controltxt
+                                'End If
+                                'movertxt()
                             End If
                             modificarRegistro()
                             Dim fechaactual As Date = Now()
@@ -5432,14 +5445,14 @@ controlpdf2:
                         subidopdf = 1
                         If pi.TIPO = 1 Then
 controltxt2:
-                            If nombre_pc = "ROBOT" Then
-                                subirFicheroCsv()
-                            End If
-                            existeCsv()
-                            If csv = 1 Then
-                                GoTo controltxt2
-                            End If
-                            movertxt()
+                            'If nombre_pc = "ROBOT" Then
+                            '    subirFicheroCsv()
+                            'End If
+                            'existeCsv()
+                            'If csv = 1 Then
+                            '    GoTo controltxt2
+                            'End If
+                            'movertxt()
                         End If
                         modificarRegistro()
                         Dim fechaactual As Date = Now()
@@ -5568,14 +5581,14 @@ controlpdf:
                             subidopdf = 1
                             If pi.TIPO = 1 Then
 controltxt:
-                                If nombre_pc = "ROBOT" Then
-                                    subirFicheroCsv()
-                                End If
-                                existeCsv()
-                                If csv = 1 Then
-                                    GoTo controltxt
-                                End If
-                                movertxt()
+                                'If nombre_pc = "ROBOT" Then
+                                '    subirFicheroCsv()
+                                'End If
+                                'existeCsv()
+                                'If csv = 1 Then
+                                '    GoTo controltxt
+                                'End If
+                                'movertxt()
                             End If
                             modificarRegistro()
                             Dim fechaactual As Date = Now()
@@ -5685,14 +5698,14 @@ controlpdf2:
                         subidopdf = 1
                         If pi.TIPO = 1 Then
 controltxt2:
-                            If nombre_pc = "ROBOT" Then
-                                subirFicheroCsv()
-                            End If
-                            existeCsv()
-                            If csv = 1 Then
-                                GoTo controltxt2
-                            End If
-                            movertxt()
+                            'If nombre_pc = "ROBOT" Then
+                            '    subirFicheroCsv()
+                            'End If
+                            'existeCsv()
+                            'If csv = 1 Then
+                            '    GoTo controltxt2
+                            'End If
+                            'movertxt()
                         End If
                         modificarRegistro()
                         Dim fechaactual As Date = Now()
@@ -5821,14 +5834,14 @@ controlpdf:
                             subidopdf = 1
                             If pi.TIPO = 1 Then
 controltxt:
-                                If nombre_pc = "ROBOT" Then
-                                    subirFicheroCsv()
-                                End If
-                                existeCsv()
-                                If csv = 1 Then
-                                    GoTo controltxt
-                                End If
-                                movertxt()
+                                'If nombre_pc = "ROBOT" Then
+                                '    subirFicheroCsv()
+                                'End If
+                                'existeCsv()
+                                'If csv = 1 Then
+                                '    GoTo controltxt
+                                'End If
+                                'movertxt()
                             End If
                             modificarRegistro()
                             Dim fechaactual As Date = Now()
@@ -5938,14 +5951,14 @@ controlpdf2:
                         subidopdf = 1
                         If pi.TIPO = 1 Then
 controltxt2:
-                            If nombre_pc = "ROBOT" Then
-                                subirFicheroCsv()
-                            End If
-                            existeCsv()
-                            If csv = 1 Then
-                                GoTo controltxt2
-                            End If
-                            movertxt()
+                            'If nombre_pc = "ROBOT" Then
+                            '    subirFicheroCsv()
+                            'End If
+                            'existeCsv()
+                            'If csv = 1 Then
+                            '    GoTo controltxt2
+                            'End If
+                            'movertxt()
                         End If
                         modificarRegistro()
                         Dim fechaactual As Date = Now()
@@ -6075,14 +6088,14 @@ controlpdf:
                             subidopdf = 1
                             If pi.TIPO = 1 Then
 controltxt:
-                                If nombre_pc = "ROBOT" Then
-                                    subirFicheroCsv()
-                                End If
-                                existeCsv()
-                                If csv = 1 Then
-                                    GoTo controltxt
-                                End If
-                                movertxt()
+                                'If nombre_pc = "ROBOT" Then
+                                '    subirFicheroCsv()
+                                'End If
+                                'existeCsv()
+                                'If csv = 1 Then
+                                '    GoTo controltxt
+                                'End If
+                                'movertxt()
                             End If
                             modificarRegistro()
                             Dim fechaactual As Date = Now()
@@ -6192,14 +6205,14 @@ controlpdf2:
                         subidopdf = 1
                         If pi.TIPO = 1 Then
 controltxt2:
-                            If nombre_pc = "ROBOT" Then
-                                subirFicheroCsv()
-                            End If
-                            existeCsv()
-                            If csv = 1 Then
-                                GoTo controltxt2
-                            End If
-                            movertxt()
+                            'If nombre_pc = "ROBOT" Then
+                            '    subirFicheroCsv()
+                            'End If
+                            'existeCsv()
+                            'If csv = 1 Then
+                            '    GoTo controltxt2
+                            'End If
+                            'movertxt()
                         End If
                         modificarRegistro()
                         Dim fechaactual As Date = Now()
@@ -6323,14 +6336,14 @@ controlpdf2:
                     subidopdf = 1
                     If pi.TIPO = 1 Then
 controltxt2:
-                        If nombre_pc = "ROBOT" Then
-                            subirFicheroCsv()
-                        End If
-                        existeCsv()
-                        If csv = 1 Then
-                            GoTo controltxt2
-                        End If
-                        movertxt()
+                        'If nombre_pc = "ROBOT" Then
+                        '    subirFicheroCsv()
+                        'End If
+                        'existeCsv()
+                        'If csv = 1 Then
+                        '    GoTo controltxt2
+                        'End If
+                        'movertxt()
                     End If
                     modificarRegistro()
                     Dim fechaactual As Date = Now()
@@ -6448,14 +6461,14 @@ controlpdf2:
                     subidopdf = 1
                     If pi.TIPO = 1 Then
 controltxt2:
-                        If nombre_pc = "ROBOT" Then
-                            subirFicheroCsv()
-                        End If
-                        existeCsv()
-                        If csv = 1 Then
-                            GoTo controltxt2
-                        End If
-                        movertxt()
+                        'If nombre_pc = "ROBOT" Then
+                        '    subirFicheroCsv()
+                        'End If
+                        'existeCsv()
+                        'If csv = 1 Then
+                        '    GoTo controltxt2
+                        'End If
+                        'movertxt()
                     End If
                     modificarRegistro()
                     Dim fechaactual As Date = Now()
@@ -6573,14 +6586,14 @@ controlpdf2:
                     subidopdf = 1
                     If pi.TIPO = 1 Then
 controltxt2:
-                        If nombre_pc = "ROBOT" Then
-                            subirFicheroCsv()
-                        End If
-                        existeCsv()
-                        If csv = 1 Then
-                            GoTo controltxt2
-                        End If
-                        movertxt()
+                        'If nombre_pc = "ROBOT" Then
+                        '    subirFicheroCsv()
+                        'End If
+                        'existeCsv()
+                        'If csv = 1 Then
+                        '    GoTo controltxt2
+                        'End If
+                        'movertxt()
                     End If
                     modificarRegistro()
                     Dim fechaactual As Date = Now()
@@ -6704,14 +6717,14 @@ controlpdf:
                             subidopdf = 1
                             If pi.TIPO = 1 Then
 controltxt:
-                                If nombre_pc = "ROBOT" Then
-                                    subirFicheroCsv()
-                                End If
-                                existeCsv()
-                                If csv = 1 Then
-                                    GoTo controltxt
-                                End If
-                                movertxt()
+                                'If nombre_pc = "ROBOT" Then
+                                '    subirFicheroCsv()
+                                'End If
+                                'existeCsv()
+                                'If csv = 1 Then
+                                '    GoTo controltxt
+                                'End If
+                                'movertxt()
                             End If
                             modificarRegistro()
                             Dim fechaactual As Date = Now()
@@ -6821,14 +6834,14 @@ controlpdf2:
                         subidopdf = 1
                         If pi.TIPO = 1 Then
 controltxt2:
-                            If nombre_pc = "ROBOT" Then
-                                subirFicheroCsv()
-                            End If
-                            existeCsv()
-                            If csv = 1 Then
-                                GoTo controltxt2
-                            End If
-                            movertxt()
+                            'If nombre_pc = "ROBOT" Then
+                            '    subirFicheroCsv()
+                            'End If
+                            'existeCsv()
+                            'If csv = 1 Then
+                            '    GoTo controltxt2
+                            'End If
+                            'movertxt()
                         End If
                         modificarRegistro()
                         Dim fechaactual As Date = Now()
@@ -6957,14 +6970,14 @@ controlpdf:
                             subidopdf = 1
                             If pi.TIPO = 1 Then
 controltxt:
-                                If nombre_pc = "ROBOT" Then
-                                    subirFicheroCsv()
-                                End If
-                                existeCsv()
-                                If csv = 1 Then
-                                    GoTo controltxt
-                                End If
-                                movertxt()
+                                'If nombre_pc = "ROBOT" Then
+                                '    subirFicheroCsv()
+                                'End If
+                                'existeCsv()
+                                'If csv = 1 Then
+                                '    GoTo controltxt
+                                'End If
+                                'movertxt()
                             End If
                             modificarRegistro()
                             Dim fechaactual As Date = Now()
@@ -7074,14 +7087,14 @@ controlpdf2:
                         subidopdf = 1
                         If pi.TIPO = 1 Then
 controltxt2:
-                            If nombre_pc = "ROBOT" Then
-                                subirFicheroCsv()
-                            End If
-                            existeCsv()
-                            If csv = 1 Then
-                                GoTo controltxt2
-                            End If
-                            movertxt()
+                            'If nombre_pc = "ROBOT" Then
+                            '    subirFicheroCsv()
+                            'End If
+                            'existeCsv()
+                            'If csv = 1 Then
+                            '    GoTo controltxt2
+                            'End If
+                            'movertxt()
                         End If
                         modificarRegistro()
                         Dim fechaactual As Date = Now()
@@ -7210,14 +7223,14 @@ controlpdf:
                             subidopdf = 1
                             If pi.TIPO = 1 Then
 controltxt:
-                                If nombre_pc = "ROBOT" Then
-                                    subirFicheroCsv()
-                                End If
-                                existeCsv()
-                                If csv = 1 Then
-                                    GoTo controltxt
-                                End If
-                                movertxt()
+                                'If nombre_pc = "ROBOT" Then
+                                '    subirFicheroCsv()
+                                'End If
+                                'existeCsv()
+                                'If csv = 1 Then
+                                '    GoTo controltxt
+                                'End If
+                                'movertxt()
                             End If
                             modificarRegistro()
                             Dim fechaactual As Date = Now()
@@ -7327,14 +7340,14 @@ controlpdf2:
                         subidopdf = 1
                         If pi.TIPO = 1 Then
 controltxt2:
-                            If nombre_pc = "ROBOT" Then
-                                subirFicheroCsv()
-                            End If
-                            existeCsv()
-                            If csv = 1 Then
-                                GoTo controltxt2
-                            End If
-                            movertxt()
+                            'If nombre_pc = "ROBOT" Then
+                            '    subirFicheroCsv()
+                            'End If
+                            'existeCsv()
+                            'If csv = 1 Then
+                            '    GoTo controltxt2
+                            'End If
+                            'movertxt()
                         End If
                         modificarRegistro()
                         Dim fechaactual As Date = Now()
@@ -7635,14 +7648,14 @@ controlpdf:
                             subidopdf = 1
                             If pi.TIPO = 1 Then
 controltxt:
-                                If nombre_pc = "ROBOT" Then
-                                    subirFicheroCsv()
-                                End If
-                                existeCsv()
-                                If csv = 1 Then
-                                    GoTo controltxt
-                                End If
-                                movertxt()
+                                'If nombre_pc = "ROBOT" Then
+                                '    subirFicheroCsv()
+                                'End If
+                                'existeCsv()
+                                'If csv = 1 Then
+                                '    GoTo controltxt
+                                'End If
+                                'movertxt()
                             End If
                             modificarRegistro()
                             Dim fechaactual As Date = Now()
@@ -7752,14 +7765,14 @@ controlpdf2:
                         subidopdf = 1
                         If pi.TIPO = 1 Then
 controltxt2:
-                            If nombre_pc = "ROBOT" Then
-                                subirFicheroCsv()
-                            End If
-                            existeCsv()
-                            If csv = 1 Then
-                                GoTo controltxt2
-                            End If
-                            movertxt()
+                            'If nombre_pc = "ROBOT" Then
+                            '    subirFicheroCsv()
+                            'End If
+                            'existeCsv()
+                            'If csv = 1 Then
+                            '    GoTo controltxt2
+                            'End If
+                            'movertxt()
                         End If
                         modificarRegistro()
                         Dim fechaactual As Date = Now()
@@ -7888,14 +7901,14 @@ controlpdf:
                             subidopdf = 1
                             If pi.TIPO = 1 Then
 controltxt:
-                                If nombre_pc = "ROBOT" Then
-                                    subirFicheroCsv()
-                                End If
-                                existeCsv()
-                                If csv = 1 Then
-                                    GoTo controltxt
-                                End If
-                                movertxt()
+                                'If nombre_pc = "ROBOT" Then
+                                '    subirFicheroCsv()
+                                'End If
+                                'existeCsv()
+                                'If csv = 1 Then
+                                '    GoTo controltxt
+                                'End If
+                                'movertxt()
                             End If
                             modificarRegistro()
                             Dim fechaactual As Date = Now()
@@ -8005,14 +8018,14 @@ controlpdf2:
                         subidopdf = 1
                         If pi.TIPO = 1 Then
 controltxt2:
-                            If nombre_pc = "ROBOT" Then
-                                subirFicheroCsv()
-                            End If
-                            existeCsv()
-                            If csv = 1 Then
-                                GoTo controltxt2
-                            End If
-                            movertxt()
+                            'If nombre_pc = "ROBOT" Then
+                            '    subirFicheroCsv()
+                            'End If
+                            'existeCsv()
+                            'If csv = 1 Then
+                            '    GoTo controltxt2
+                            'End If
+                            'movertxt()
                         End If
                         modificarRegistro()
                         Dim fechaactual As Date = Now()
@@ -8141,14 +8154,14 @@ controlpdf:
                             subidopdf = 1
                             If pi.TIPO = 1 Then
 controltxt:
-                                If nombre_pc = "ROBOT" Then
-                                    subirFicheroCsv()
-                                End If
-                                existeCsv()
-                                If csv = 1 Then
-                                    GoTo controltxt
-                                End If
-                                movertxt()
+                                'If nombre_pc = "ROBOT" Then
+                                '    subirFicheroCsv()
+                                'End If
+                                'existeCsv()
+                                'If csv = 1 Then
+                                '    GoTo controltxt
+                                'End If
+                                'movertxt()
                             End If
                             modificarRegistro()
                             Dim fechaactual As Date = Now()
@@ -8258,14 +8271,14 @@ controlpdf2:
                         subidopdf = 1
                         If pi.TIPO = 1 Then
 controltxt2:
-                            If nombre_pc = "ROBOT" Then
-                                subirFicheroCsv()
-                            End If
-                            existeCsv()
-                            If csv = 1 Then
-                                GoTo controltxt2
-                            End If
-                            movertxt()
+                            'If nombre_pc = "ROBOT" Then
+                            '    subirFicheroCsv()
+                            'End If
+                            'existeCsv()
+                            'If csv = 1 Then
+                            '    GoTo controltxt2
+                            'End If
+                            'movertxt()
                         End If
                         modificarRegistro()
                         Dim fechaactual As Date = Now()
@@ -8388,14 +8401,14 @@ controlpdf:
                     subidopdf = 1
                     If pi.TIPO = 1 Then
 controltxt:
-                        If nombre_pc = "ROBOT" Then
-                            subirFicheroCsv()
-                        End If
-                        existeCsv()
-                        If csv = 1 Then
-                            GoTo controltxt
-                        End If
-                        movertxt()
+                        'If nombre_pc = "ROBOT" Then
+                        '    subirFicheroCsv()
+                        'End If
+                        'existeCsv()
+                        'If csv = 1 Then
+                        '    GoTo controltxt
+                        'End If
+                        'movertxt()
                     End If
                     modificarRegistro()
                     Dim fechaactual As Date = Now()
@@ -8609,19 +8622,21 @@ controltxt:
         fs = infoFichero.OpenRead()
         Try
             Dim escritor As Stream
-            escritor = peticionFTP.GetRequestStream()
-            ' Leemos 150 KB del fichero en cada iteración
-            num = fs.Read(lector, 0, longitudBuffer)
-            While (num <> 0)
-                ' Escribimos el contenido del flujo de lectura en el
-                ' flujo de escritura del comando FTP
-                escritor.Write(lector, 0, num)
+            If infoFichero.Length > 0 Then
+                escritor = peticionFTP.GetRequestStream()
+                ' Leemos 150 KB del fichero en cada iteración
                 num = fs.Read(lector, 0, longitudBuffer)
-            End While
-            escritor.Close()
-            fs.Close()
-            ' Si todo ha ido bien, se devolverá String.Empty
-            Return String.Empty
+                While (num <> 0)
+                    ' Escribimos el contenido del flujo de lectura en el
+                    ' flujo de escritura del comando FTP
+                    escritor.Write(lector, 0, num)
+                    num = fs.Read(lector, 0, longitudBuffer)
+                End While
+                escritor.Close()
+                fs.Close()
+                ' Si todo ha ido bien, se devolverá String.Empty
+                Return String.Empty
+            End If
         Catch ex As Exception
             ' Si se produce algún fallo, se devolverá el mensaje del error
             Return ex.Message
@@ -9511,7 +9526,7 @@ controltxt:
         Catch ex As Exception
             mensaje = mensaje & " excel(com) - "
             excel = 1
-            'MsgBox("No esta creado el .XLS de la ficha + " & idficha & "", MsgBoxStyle.Critical, "Atención")
+            MsgBox("No esta creado el .XLS de la ficha + " & idficha & "", MsgBoxStyle.Critical, "Atención")
             ' Si el objeto no existe, se producirá un error y al entrar por el Catch
             ' se devolverá falso
             Return False
@@ -9600,7 +9615,7 @@ controltxt:
         Catch ex As Exception
             mensaje = mensaje & " pdf(com) - "
             pdf = 1
-            ' MsgBox("No esta creado el PDF de la ficha + " & idficha & "", MsgBoxStyle.Critical, "Atención")
+            MsgBox("No esta creado el PDF de la ficha + " & idficha & "", MsgBoxStyle.Critical, "Atención")
             ' Si el objeto no existe, se producirá un error y al entrar por el Catch
             ' se devolverá falso
             Return False
@@ -16079,49 +16094,60 @@ controltxt:
                 Next
             End If
         End If
-        If email <> "" And email <> "no aportado" Then
-            'CONFIGURACIÓN DEL STMP 
-            _SMTP.Credentials = New System.Net.NetworkCredential("colaveco@gmail.com", "CLV19912021Colaveco30")
-            _SMTP.Host = "smtp.gmail.com"
-            _SMTP.Port = 587 '465
-            _SMTP.EnableSsl = True
-            ' CONFIGURACION DEL MENSAJE 
-            '_Message.[To].Add("computos@colaveco.com")
-            _Message.[To].Add(email)
-            'Cuenta de Correo al que se le quiere enviar el e-mail 
-            _Message.From = New System.Net.Mail.MailAddress("colaveco@gmail.com", "COLAVECO", System.Text.Encoding.UTF8)
-            'Quien lo envía 
-            _Message.Subject = "Envío de cajas"
-            'Sujeto del e-mail 
-            _Message.SubjectEncoding = System.Text.Encoding.UTF8
-            'Codificacion 
-            '_Message.Body = "Se han enviado las siguientes cajas:" & " " & ecaja1 & ", " & "por" & " " & eagencia & " " & "envío nº" & " " & eremito & ""
-            If eremito <> "" Then
-                _Message.Body = "Colaveco despachó la/s siguiente/s caja/s Nº " & texto & " por agencia" & " " & eagencia & ", " & "envío nº" & " " & eremito
+        If Not String.IsNullOrEmpty(email) And String.IsNullOrEmpty(email2) Then
+
+                'CONFIGURACIÓN DEL STMP 
+                _SMTP.Credentials = New System.Net.NetworkCredential("colaveco@gmail.com", "CLV19912021Colaveco30")
+                _SMTP.Host = "smtp.gmail.com"
+                _SMTP.Port = 587 '465
+                _SMTP.EnableSsl = True
+                ' CONFIGURACION DEL MENSAJE 
+                '_Message.[To].Add("computos@colaveco.com")
+                _Message.[To].Add(email)
+                'Cuenta de Correo al que se le quiere enviar el e-mail 
+                _Message.From = New System.Net.Mail.MailAddress("colaveco@gmail.com", "COLAVECO", System.Text.Encoding.UTF8)
+                'Quien lo envía 
+                _Message.Subject = "Envío de cajas"
+                'Sujeto del e-mail 
+                _Message.SubjectEncoding = System.Text.Encoding.UTF8
+                'Codificacion 
+                '_Message.Body = "Se han enviado las siguientes cajas:" & " " & ecaja1 & ", " & "por" & " " & eagencia & " " & "envío nº" & " " & eremito & ""
+                If eremito <> "" Then
+                    _Message.Body = "Colaveco despachó la/s siguiente/s caja/s Nº " & texto & " por agencia" & " " & eagencia & ", " & "envío nº" & " " & eremito
+                Else
+                    _Message.Body = "Colaveco despachó la/s siguiente/s caja/s Nº " & texto & " por agencia" & " " & eagencia
+                End If
+                'contenido del mail 
+                _Message.BodyEncoding = System.Text.Encoding.UTF8 '
+                _Message.Priority = System.Net.Mail.MailPriority.Normal
+                _Message.IsBodyHtml = False
+                ' ADICION DE DATOS ADJUNTOS ‘
+                'Dim _File As String = My.Application.Info.DirectoryPath & "archivo" 'archivo que se quiere adjuntar ‘
+                'Dim _Attachment As New System.Net.Mail.Attachment(_File, System.Net.Mime.MediaTypeNames.Application.Octet) '
+                '_Message.Attachments.Add(_Attachment) 'ENVIO 
+                Try
+                    _SMTP.Send(_Message)
+                    'MessageBox.Show("Correo enviado!", "Correo", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Catch ex As System.Net.Mail.SmtpException ' MessageBox.Show(ex.ToString) 
+                End Try
             Else
-                _Message.Body = "Colaveco despachó la/s siguiente/s caja/s Nº " & texto & " por agencia" & " " & eagencia
-            End If
-            'contenido del mail 
-            _Message.BodyEncoding = System.Text.Encoding.UTF8 '
-            _Message.Priority = System.Net.Mail.MailPriority.Normal
-            _Message.IsBodyHtml = False
-            ' ADICION DE DATOS ADJUNTOS ‘
-            'Dim _File As String = My.Application.Info.DirectoryPath & "archivo" 'archivo que se quiere adjuntar ‘
-            'Dim _Attachment As New System.Net.Mail.Attachment(_File, System.Net.Mime.MediaTypeNames.Application.Octet) '
-            '_Message.Attachments.Add(_Attachment) 'ENVIO 
-            Try
-                _SMTP.Send(_Message)
-                'MessageBox.Show("Correo enviado!", "Correo", MessageBoxButtons.OK, MessageBoxIcon.Information)
-            Catch ex As System.Net.Mail.SmtpException ' MessageBox.Show(ex.ToString) 
-            End Try
-        Else
-            'MsgBox("Este cliente no tiene correo electrónico ingresado, por lo tanto no se le envía aviso.")
+                'MsgBox("Este cliente no tiene correo electrónico ingresado, por lo tanto no se le envía aviso.")
         End If
-        email = ""
-        eagencia = ""
-        eremito = ""
-        texto = ""
+            email = ""
+            eagencia = ""
+            eremito = ""
+            texto = ""
     End Sub
+
+    Function IsValidEmailAddress(ByVal emailAddress As String) As Boolean
+        Dim valid As Boolean = True
+        Try
+            Dim a = New System.Net.Mail.MailAddress(emailAddress)
+        Catch ex As FormatException
+            valid = False
+        End Try
+        Return valid
+    End Function
     Private Sub envio_mail_informes()
         Dim _Message As New System.Net.Mail.MailMessage()
         Dim _SMTP As New System.Net.Mail.SmtpClient
@@ -16987,6 +17013,9 @@ controltxt:
                             If c.UREA <> -1 Then
                                 Dim valorurea As Integer
                                 valorurea = c.UREA * 0.466
+                                If valorurea > 20 Or valorurea < 9 Then
+                                    x1hoja.Cells(fila, columna).interior.color = RGB(192, 192, 192)
+                                End If
                                 x1hoja.Cells(fila, columna).formula = valorurea
                                 x1hoja.Cells(fila, columna).HorizontalAlignment = XlHAlign.xlHAlignCenter
                                 x1hoja.Cells(fila, columna).Font.Size = 8
