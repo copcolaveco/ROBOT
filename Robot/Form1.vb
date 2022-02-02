@@ -53,20 +53,20 @@ Public Class FormInicio
 #Region "TIMER`s"
 
     Private Sub Timer1_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer1.Tick
-        ListBox1.Items.Clear()
-        ListBox1.Items.Add(Now)
-        ListBox1.Items.Add("Revisando cuentas corrientes")
-        revisar_cuentas_corrientes()
-        actualizar_cajas()
+        'ListBox1.Items.Clear()
+        'ListBox1.Items.Add(Now)
+        'ListBox1.Items.Add("Revisando cuentas corrientes")
+        'revisar_cuentas_corrientes()
+        'actualizar_cajas()
         Timer1.Enabled = False
         Timer2.Enabled = True
     End Sub
     Private Sub Timer2_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer2.Tick
-        ListBox1.Items.Clear()
-        ListBox1.Items.Add(Now)
-        ListBox1.Items.Add("Subiendo cuentas corrientes")
-        subir_ctacte()
-        subir_ctacte2()
+        'ListBox1.Items.Clear()
+        'ListBox1.Items.Add(Now)
+        'ListBox1.Items.Add("Subiendo cuentas corrientes")
+        'subir_ctacte()
+        'subir_ctacte2()
         Timer2.Enabled = False
         Timer3.Enabled = True
     End Sub
@@ -5063,143 +5063,19 @@ controlpdf:
                             subidopdf = 1
                             If pi.TIPO = 1 Then
 controltxt:
-                                If tipoinforme = 10 And userid = 6299 Then
-                                    If nombre_pc = "ROBOT" Then
-                                        subirFicheroCsv()
-                                    End If
-                                    existeCsv()
-                                    If csv = 1 Then
-                                        GoTo controltxt
-                                    End If
-                                    If nombre_pc = "ROBOT" Then
-                                        movertxt()
-                                    Else
-                                        movertxt_otrapc()
-                                    End If
-                                End If
-                            End If
-                            modificarRegistro()
-                            Dim fechaactual As Date = Now()
-                            Dim _fecha As String
-                            _fecha = Format(fechaactual, "yyyy-MM-dd")
-                            pi.marcarsubido(_fecha)
-                            If tipoinforme = 15 Then
-                                enviaremail()
-                            End If
-                            Dim s As New dSolicitudAnalisis
-                            Dim fechaenvio As Date = DateFecha.Value.ToString("yyyy-MM-dd")
-                            Dim fecenv As String
-                            fecenv = Format(fechaenvio, "yyyy-MM-dd")
-                            s.ID = idficha
-                            s.actualizarfechaenvio2(fecenv)
-                            s.marcar2()
-                            s = Nothing
-                            If subidoxls = 1 And subidopdf = 1 Then
-                                If nombre_pc = "ROBOT" Then
-                                    moverexcel()
-                                    moverpdf()
-                                Else
-                                    moverexcel_otrapc()
-                                    moverpdf_otrapc()
-                                End If
-                                ' Grabar estado de la ficha
-                                Dim est As New dEstados
-                                est.FICHA = idficha
-                                est.ESTADO = 8
-                                est.FECHA = fecenv
-                                est.guardar2()
-                                est = Nothing
-                                '****************************
-                                envio_mail_informes()
-                            End If
-                        Else
-                        End If
-                    Else
-                        idficha = pi.FICHA
-                        _tipoinforme = pi.TIPO
-                        enviar_copia = pi.COPIA
-                        _abonado = pi.ABONADO
-                        _comentarios = pi.COMENTARIO
-                        Dim sa As New dSolicitudAnalisis
-                        sa.ID = idficha
-                        sa = sa.buscar
-                        If Not sa Is Nothing Then
-                            Dim p As New dCliente
-                            tipoinforme = sa.IDTIPOINFORME
-                            p.ID = sa.IDPRODUCTOR
-                            p = p.buscar
-                            If Not p Is Nothing Then
-                                email = ""
-                                email2 = ""
-                                If p.NOT_EMAIL_ANALISIS1 <> "" Then
-                                    email = RTrim(p.NOT_EMAIL_ANALISIS1)
-                                End If
-                                If p.NOT_EMAIL_ANALISIS2 <> "" Then
-                                    email2 = RTrim(p.NOT_EMAIL_ANALISIS2)
-                                End If
-                                If email = "" Then
-                                    If email2 = "" Then
-                                        If p.EMAIL <> "" Then
-                                            email = RTrim(p.EMAIL)
-                                        End If
-                                    Else
-                                        email = email2
-                                    End If
-                                Else
-                                    If email2 = "" Then
-                                        email = email
-                                    Else
-                                        email = email & "," & email2
-                                    End If
-                                End If
-                                productorweb_com = p.USUARIO_WEB
-                                Dim pw_com As New dProductorWeb_com
-                                pw_com.USUARIO = productorweb_com
-                                pw_com = pw_com.buscar
-                                If Not pw_com Is Nothing Then
-                                    idproductorweb_com = pw_com.ID
-                                    'email = RTrim(pw_com.ENVIAR_EMAIL)
-                                    celular = Replace(pw_com.ENVIAR_SMS, " ", "")
-                                    carpeta = idproductorweb_com
-                                    crea_carpeta()
-                                End If
-                                sa = Nothing
-                            End If
-                        End If
-controlexcel2:
-                        If nombre_pc = "ROBOT" Then
-                            subirFicheroXls()
-                        End If
-                        existeXls()
-                        If excel = 1 Then
-                            GoTo controlexcel2
-                        End If
-                        subidoxls = 1
-controlpdf2:
-                        If nombre_pc = "ROBOT" Then
-                            subirFicheroPdf()
-                        End If
-                        existePdf()
-                        If pdf = 1 Then
-                            GoTo controlpdf2
-                        End If
-                        subidopdf = 1
-                        If pi.TIPO = 1 Then
-controltxt2:
-                            If tipoinforme = 10 And userid = 6299 Then
+
                                 If nombre_pc = "ROBOT" Then
                                     subirFicheroCsv()
                                 End If
                                 existeCsv()
                                 If csv = 1 Then
-                                    GoTo controltxt2
+                                    GoTo controltxt
                                 End If
                                 If nombre_pc = "ROBOT" Then
                                     movertxt()
                                 Else
                                     movertxt_otrapc()
                                 End If
-                            End If
                         End If
                         modificarRegistro()
                         Dim fechaactual As Date = Now()
@@ -5235,8 +5111,131 @@ controltxt2:
                             '****************************
                             envio_mail_informes()
                         End If
+                    Else
                     End If
-                    cifq = Nothing
+                    Else
+                    idficha = pi.FICHA
+                    _tipoinforme = pi.TIPO
+                    enviar_copia = pi.COPIA
+                    _abonado = pi.ABONADO
+                    _comentarios = pi.COMENTARIO
+                    Dim sa As New dSolicitudAnalisis
+                    sa.ID = idficha
+                    sa = sa.buscar
+                    If Not sa Is Nothing Then
+                        Dim p As New dCliente
+                        tipoinforme = sa.IDTIPOINFORME
+                        p.ID = sa.IDPRODUCTOR
+                        p = p.buscar
+                        If Not p Is Nothing Then
+                            email = ""
+                            email2 = ""
+                            If p.NOT_EMAIL_ANALISIS1 <> "" Then
+                                email = RTrim(p.NOT_EMAIL_ANALISIS1)
+                            End If
+                            If p.NOT_EMAIL_ANALISIS2 <> "" Then
+                                email2 = RTrim(p.NOT_EMAIL_ANALISIS2)
+                            End If
+                            If email = "" Then
+                                If email2 = "" Then
+                                    If p.EMAIL <> "" Then
+                                        email = RTrim(p.EMAIL)
+                                    End If
+                                Else
+                                    email = email2
+                                End If
+                            Else
+                                If email2 = "" Then
+                                    email = email
+                                Else
+                                    email = email & "," & email2
+                                End If
+                            End If
+                            productorweb_com = p.USUARIO_WEB
+                            Dim pw_com As New dProductorWeb_com
+                            pw_com.USUARIO = productorweb_com
+                            pw_com = pw_com.buscar
+                            If Not pw_com Is Nothing Then
+                                idproductorweb_com = pw_com.ID
+                                'email = RTrim(pw_com.ENVIAR_EMAIL)
+                                celular = Replace(pw_com.ENVIAR_SMS, " ", "")
+                                carpeta = idproductorweb_com
+                                crea_carpeta()
+                            End If
+                            sa = Nothing
+                        End If
+                    End If
+controlexcel2:
+                    If nombre_pc = "ROBOT" Then
+                        subirFicheroXls()
+                    End If
+                    existeXls()
+                    If excel = 1 Then
+                        GoTo controlexcel2
+                    End If
+                    subidoxls = 1
+controlpdf2:
+                    If nombre_pc = "ROBOT" Then
+                        subirFicheroPdf()
+                    End If
+                    existePdf()
+                    If pdf = 1 Then
+                        GoTo controlpdf2
+                    End If
+                    subidopdf = 1
+                    If pi.TIPO = 1 Then
+controltxt2:
+
+                            If nombre_pc = "ROBOT" Then
+                                subirFicheroCsv()
+                            End If
+                            existeCsv()
+                            If csv = 1 Then
+                                GoTo controltxt2
+                            End If
+                            If nombre_pc = "ROBOT" Then
+                                movertxt()
+                            Else
+                                movertxt_otrapc()
+                            End If
+
+                    End If
+                    modificarRegistro()
+                    Dim fechaactual As Date = Now()
+                    Dim _fecha As String
+                    _fecha = Format(fechaactual, "yyyy-MM-dd")
+                    pi.marcarsubido(_fecha)
+                    If tipoinforme = 15 Then
+                        enviaremail()
+                    End If
+                    Dim s As New dSolicitudAnalisis
+                    Dim fechaenvio As Date = DateFecha.Value.ToString("yyyy-MM-dd")
+                    Dim fecenv As String
+                    fecenv = Format(fechaenvio, "yyyy-MM-dd")
+                    s.ID = idficha
+                    s.actualizarfechaenvio2(fecenv)
+                    s.marcar2()
+                    s = Nothing
+                    If subidoxls = 1 And subidopdf = 1 Then
+                        If nombre_pc = "ROBOT" Then
+                            moverexcel()
+                            moverpdf()
+                        Else
+                            moverexcel_otrapc()
+                            moverpdf_otrapc()
+                        End If
+                        ' Grabar estado de la ficha
+                        Dim est As New dEstados
+                        est.FICHA = idficha
+                        est.ESTADO = 8
+                        est.FECHA = fecenv
+                        est.guardar2()
+                        est = Nothing
+                        '****************************
+                        envio_mail_informes()
+                    End If
+                    End If
+            cifq = Nothing
                 Next
             End If
         End If
