@@ -280,6 +280,14 @@
         Dim e As New pEnvioCajas
         Return e.buscarxenvio(Me)
     End Function
+    Public Function buscarCajasAtrasadas() As ArrayList
+        Dim e As New pEnvioCajas
+        Return e.buscarCajasAtrasadas(Me)
+    End Function
+    Public Function buscarCajasConFechaPorPedido(ByVal idpedido As Long) As dEnvioCajas
+        Dim e As New pEnvioCajas
+        Return e.buscarCajasConFechaPorPedido(idpedido)
+    End Function
 
 #End Region
 

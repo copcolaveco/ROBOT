@@ -31,6 +31,7 @@ Public Class FormInicio
     Private subido As Integer = 0
     Private carpeta As Long = 0
     Private compraid As Long = 0
+    Private clienteid As Long = 0
     Private tipoinformeweb As String
     Private nmuestrasweb As Integer
     Private muestraweb As String
@@ -53,24 +54,25 @@ Public Class FormInicio
 #Region "TIMER`s"
 
     Private Sub Timer1_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer1.Tick
-        'ListBox1.Items.Clear()
-        'ListBox1.Items.Add(Now)
-        'ListBox1.Items.Add("Revisando cuentas corrientes")
-        'revisar_cuentas_corrientes()
-        'actualizar_cajas()
+        ListBox1.Items.Clear()
+        ListBox1.Items.Add(Now)
+        ListBox1.Items.Add("Revisando cuentas corrientes")
+        revisar_cuentas_corrientes()
+        actualizar_cajas()
         Timer1.Enabled = False
         Timer2.Enabled = True
     End Sub
     Private Sub Timer2_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer2.Tick
-        'ListBox1.Items.Clear()
-        'ListBox1.Items.Add(Now)
-        'ListBox1.Items.Add("Subiendo cuentas corrientes")
-        'subir_ctacte()
-        'subir_ctacte2()
+        ListBox1.Items.Clear()
+        ListBox1.Items.Add(Now)
+        ListBox1.Items.Add("Subiendo cuentas corrientes")
+        subir_ctacte()
+        subir_ctacte2()
         Timer2.Enabled = False
         Timer3.Enabled = True
     End Sub
     Private Sub Timer3_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer3.Tick
+        'moverarchivossubidos()
         DateFecha.Value = Now
         If nombre_pc = "ROBOT" Then
             ListBox1.Items.Clear()
@@ -246,6 +248,7 @@ Public Class FormInicio
                 If dia < 27 Then
                     If hora > 9 Then
                         enviarcompras()
+                        'enviarMailCajas()
                     End If
                 End If
             End If
@@ -5063,13 +5066,13 @@ controlpdf:
                             subidopdf = 1
                             If pi.TIPO = 1 Then
 controltxt:
-
                                 If nombre_pc = "ROBOT" Then
                                     subirFicheroCsv()
                                 End If
                                 existeCsv()
+
                                 If csv = 1 Then
-                                    GoTo controltxt
+                                    GoTo controltxt2
                                 End If
                                 If nombre_pc = "ROBOT" Then
                                     movertxt()
@@ -5185,11 +5188,11 @@ controlpdf2:
                     subidopdf = 1
                     If pi.TIPO = 1 Then
 controltxt2:
-
                             If nombre_pc = "ROBOT" Then
                                 subirFicheroCsv()
                             End If
                             existeCsv()
+
                             If csv = 1 Then
                                 GoTo controltxt2
                             End If
@@ -5198,7 +5201,6 @@ controltxt2:
                             Else
                                 movertxt_otrapc()
                             End If
-
                     End If
                     modificarRegistro()
                     Dim fechaactual As Date = Now()
@@ -8783,9 +8785,9 @@ controltxt:
             fichero = "C:\INFORMES PARA SUBIR\" & idficha & ".txt"
             destino = "ftp://colaveco.com.uy/public_html/gestor/data_file/" & idproductorweb_com & "/control_lechero/" & idficha & ".txt"
         End If
-        If tipoinforme = 10 And userid = 6299 Then
+        If tipoinforme = 10 Then
             fichero = "C:\INFORMES PARA SUBIR\" & idficha & ".txt"
-            destino = "ftp://colaveco.com.uy/public_html/gestor/data_file/" & idproductorweb_com & "/control_lechero/" & idficha & ".txt"
+            destino = "ftp://colaveco.com.uy/public_html/gestor/data_file/" & idproductorweb_com & "/calidad_de_leche/" & idficha & ".txt"
         End If
         If fichero <> "" Then
             Dim infoFichero As New FileInfo(fichero)
@@ -8828,6 +8830,7 @@ controltxt:
                 ' Si todo ha ido bien, se devolverá String.Empty
                 Return String.Empty
             Catch ex As Exception
+                MsgBox("No esta creado el .TXT de la ficha + " & idficha & " + en la ruta C:\INFORMES PARA SUBIR\", MsgBoxStyle.Critical, "Atención")
                 ' Si se produce algún fallo, se devolverá el mensaje del error
                 Return ex.Message
             End Try
@@ -9625,7 +9628,7 @@ controltxt:
         Dim destino As String = ""
         Dim user As String = "colaveco"
         Dim pass As String = "HSy7TS8sfuv"
-        If tipoinforme = 1 Or tipoinforme = 10 Then
+        If tipoinforme = 1 Then
             fichero = "\\192.168.1.10\e\NET\CONTROL_LECHERO\" & idficha & ".txt"
             destino = "ftp://colaveco.com.uy/public_html/gestor/data_file/" & idproductorweb_com & "/control_lechero/" & idficha & ".txt"
 
@@ -9648,15 +9651,15 @@ controltxt:
             Catch ex As Exception
                 mensaje = mensaje & " csv(com) - "
                 csv = 1
-                'MsgBox("No esta creado el txt de la ficha + " & idficha & "", MsgBoxStyle.Critical, "Atención")
+                MsgBox("Si aun no esta la ficha en el Z:\, moverla a su carpeta corerspondiente, Ficha: " & idficha & ".txt", MsgBoxStyle.Critical, "Atención")
                 ' Si el objeto no existe, se producirá un error y al entrar por el Catch
                 ' se devolverá falso
                 Return False
             End Try
         End If
         If tipoinforme = 10 Then
-            fichero = "\\192.168.1.10\e\NET\CONTROL_LECHERO\" & idficha & ".txt"
-            destino = "ftp://colaveco.com.uy/public_html/gestor/data_file/" & idproductorweb_com & "/control_lechero/" & idficha & ".txt"
+            fichero = "\\192.168.1.10\e\NET\CALIDAD\" & idficha & ".txt"
+            destino = "ftp://colaveco.com.uy/public_html/gestor/data_file/" & idproductorweb_com & "/calidad_de_leche/" & idficha & ".txt"
 
 
 
@@ -9677,7 +9680,8 @@ controltxt:
             Catch ex As Exception
                 mensaje = mensaje & " csv(com) - "
                 csv = 1
-                'MsgBox("No esta creado el TXT de la ficha + " & idficha & "", MsgBoxStyle.Critical, "Atención")
+                MsgBox("Si aun no esta la ficha en el Z:\, moverla a su carpeta corerspondiente, Ficha: " & idficha & "", MsgBoxStyle.Critical, "Atención")
+
                 ' Si el objeto no existe, se producirá un error y al entrar por el Catch
                 ' se devolverá falso
                 Return False
@@ -10986,173 +10990,61 @@ controltxt:
         Dim response As Byte() = PostResponse("http://colaveco-gestor.herokuapp.com/resultados", "POST", parameters, status)
     End Sub
     Private Sub moverexcel()
-        If tipoinforme = 10 Then
-            'Dim sArchivoOrigen As String = "\\192.168.1.10\e\NET\INFORMES PARA SUBIR\" & idficha & ".xls"
-            Dim sArchivoOrigen As String = "C:\INFORMES PARA SUBIR\" & idficha & ".xls"
-            Dim sRutaDestino As String = "\\192.168.1.10\e\NET\CALIDAD\" & idficha & ".xls"
-            Try
-                ' Mover el fichero.si existe lo sobreescribe  
-                My.Computer.FileSystem.MoveFile(sArchivoOrigen, _
-                                                sRutaDestino, _
-                                                True)
-                'MsgBox("Ok.", MsgBoxStyle.Information, "Mover archivo")
-                ' errores  
-            Catch ex As Exception
-                'MsgBox(ex.Message.ToString, MsgBoxStyle.Critical)
-            End Try
-        ElseIf tipoinforme = 1 Then
-            'Dim sArchivoOrigen As String = "\\192.168.1.10\e\NET\INFORMES PARA SUBIR\" & idficha & ".xls"
-            Dim sArchivoOrigen As String = "C:\INFORMES PARA SUBIR\" & idficha & ".xls"
-            Dim sRutaDestino As String = "\\192.168.1.10\e\NET\CONTROL_LECHERO\" & idficha & ".xls"
-            Try
-                ' Mover el fichero.si existe lo sobreescribe  
-                My.Computer.FileSystem.MoveFile(sArchivoOrigen, _
-                                                sRutaDestino, _
-                                                True)
-                'MsgBox("Ok.", MsgBoxStyle.Information, "Mover archivo")
-                ' errores  
-            Catch ex As Exception
-                'MsgBox(ex.Message.ToString, MsgBoxStyle.Critical)
-            End Try
+         Dim sRutaDestino As String
+        If tipoinforme = 1 Then
+            sRutaDestino = "\\192.168.1.10\e\NET\CONTROL_LECHERO\" & idficha & ".xls"
         ElseIf tipoinforme = 3 Then
-            'Dim sArchivoOrigen As String = "\\192.168.1.10\e\NET\INFORMES PARA SUBIR\" & idficha & ".xls"
-            Dim sArchivoOrigen As String = "C:\INFORMES PARA SUBIR\" & idficha & ".xls"
-            Dim sRutaDestino As String = "\\192.168.1.10\e\NET\AGUA\" & idficha & ".xls"
-            Try
-                ' Mover el fichero.si existe lo sobreescribe  
-                My.Computer.FileSystem.MoveFile(sArchivoOrigen, _
-                                                sRutaDestino, _
-                                                True)
-                'MsgBox("Ok.", MsgBoxStyle.Information, "Mover archivo")
-                ' errores  
-            Catch ex As Exception
-                'MsgBox(ex.Message.ToString, MsgBoxStyle.Critical)
-            End Try
+            sRutaDestino = "\\192.168.1.10\e\NET\AGUA\" & idficha & ".xls"
         ElseIf tipoinforme = 4 Then
-            'Dim sArchivoOrigen As String = "\\192.168.1.10\e\NET\INFORMES PARA SUBIR\" & idficha & ".xls"
-            Dim sArchivoOrigen As String = "C:\INFORMES PARA SUBIR\" & idficha & ".xls"
-            Dim sRutaDestino As String = "\\192.168.1.10\e\NET\ANTIBIOGRAMA\" & idficha & ".xls"
-            Try
-                ' Mover el fichero.si existe lo sobreescribe  
-                My.Computer.FileSystem.MoveFile(sArchivoOrigen, _
-                                                sRutaDestino, _
-                                                True)
-                'MsgBox("Ok.", MsgBoxStyle.Information, "Mover archivo")
-                ' errores  
-            Catch ex As Exception
-                'MsgBox(ex.Message.ToString, MsgBoxStyle.Critical)
-            End Try
+            sRutaDestino = "\\192.168.1.10\e\NET\ANTIBIOGRAMA\" & idficha & ".xls"
+        ElseIf tipoinforme = 5 Then
+            sRutaDestino = "\\192.168.1.10\e\NET\PAL\" & idficha & ".xls"
+        ElseIf tipoinforme = 6 Then
+            sRutaDestino = "\\192.168.1.10\e\NET\PARASITOLOGIA\" & idficha & ".xls"
         ElseIf tipoinforme = 7 Then
-            'Dim sArchivoOrigen As String = "\\192.168.1.10\e\NET\INFORMES PARA SUBIR\" & idficha & ".xls"
-            Dim sArchivoOrigen As String = "C:\INFORMES PARA SUBIR\" & idficha & ".xls"
-            Dim sRutaDestino As String = "\\192.168.1.10\e\NET\ALIMENTOS\" & idficha & ".xls"
-            Try
-                ' Mover el fichero.si existe lo sobreescribe  
-                My.Computer.FileSystem.MoveFile(sArchivoOrigen, _
-                                                sRutaDestino, _
-                                                True)
-                'MsgBox("Ok.", MsgBoxStyle.Information, "Mover archivo")
-                ' errores  
-            Catch ex As Exception
-                'MsgBox(ex.Message.ToString, MsgBoxStyle.Critical)
-            End Try
-        ElseIf tipoinforme = 13 Then
-            'Dim sArchivoOrigen As String = "\\192.168.1.10\e\NET\INFORMES PARA SUBIR\" & idficha & ".xls"
-            Dim sArchivoOrigen As String = "C:\INFORMES PARA SUBIR\" & idficha & ".xls"
-            Dim sRutaDestino As String = "\\192.168.1.10\e\NET\NUTRICION\" & idficha & ".xls"
-            Try
-                ' Mover el fichero.si existe lo sobreescribe  
-                My.Computer.FileSystem.MoveFile(sArchivoOrigen, _
-                                                sRutaDestino, _
-                                                True)
-                'MsgBox("Ok.", MsgBoxStyle.Information, "Mover archivo")
-                ' errores  
-            Catch ex As Exception
-                'MsgBox(ex.Message.ToString, MsgBoxStyle.Critical)
-            End Try
-        ElseIf tipoinforme = 14 Then
-            'Dim sArchivoOrigen As String = "\\192.168.1.10\e\NET\INFORMES PARA SUBIR\" & idficha & ".xls"
-            Dim sArchivoOrigen As String = "C:\INFORMES PARA SUBIR\" & idficha & ".xls"
-            Dim sRutaDestino As String = "\\192.168.1.10\e\NET\Suelos\" & idficha & ".xls"
-            Try
-                ' Mover el fichero.si existe lo sobreescribe  
-                My.Computer.FileSystem.MoveFile(sArchivoOrigen, _
-                                                sRutaDestino, _
-                                                True)
-                'MsgBox("Ok.", MsgBoxStyle.Information, "Mover archivo")
-                ' errores  
-            Catch ex As Exception
-                'MsgBox(ex.Message.ToString, MsgBoxStyle.Critical)
-            End Try
-        ElseIf tipoinforme = 15 Then
-            'Dim sArchivoOrigen As String = "\\192.168.1.10\e\NET\INFORMES PARA SUBIR\" & idficha & ".xls"
-            Dim sArchivoOrigen As String = "C:\INFORMES PARA SUBIR\" & idficha & ".xls"
-            Dim sRutaDestino As String = "\\192.168.1.10\e\NET\Brucelosis en leche\" & idficha & ".xls"
-            Try
-                ' Mover el fichero.si existe lo sobreescribe  
-                My.Computer.FileSystem.MoveFile(sArchivoOrigen, _
-                                                sRutaDestino, _
-                                                True)
-                'MsgBox("Ok.", MsgBoxStyle.Information, "Mover archivo")
-                ' errores  
-            Catch ex As Exception
-                'MsgBox(ex.Message.ToString, MsgBoxStyle.Critical)
-            End Try
-        ElseIf tipoinforme = 16 Then
-            'Dim sArchivoOrigen As String = "\\192.168.1.10\e\NET\INFORMES PARA SUBIR\" & idficha & ".xls"
-            Dim sArchivoOrigen As String = "C:\INFORMES PARA SUBIR\" & idficha & ".xls"
-            Dim sRutaDestino As String = "\\192.168.1.10\e\NET\Efluentes\" & idficha & ".xls"
-            Try
-                ' Mover el fichero.si existe lo sobreescribe  
-                My.Computer.FileSystem.MoveFile(sArchivoOrigen, _
-                                                sRutaDestino, _
-                                                True)
-                'MsgBox("Ok.", MsgBoxStyle.Information, "Mover archivo")
-                ' errores  
-            Catch ex As Exception
-                'MsgBox(ex.Message.ToString, MsgBoxStyle.Critical)
-            End Try
-        ElseIf tipoinforme = 17 Then
-            'Dim sArchivoOrigen As String = "\\192.168.1.10\e\NET\INFORMES PARA SUBIR\" & idficha & ".xls"
-            Dim sArchivoOrigen As String = "C:\INFORMES PARA SUBIR\" & idficha & ".xls"
-            Dim sRutaDestino As String = "\\192.168.1.10\e\NET\ANTIBIOGRAMA\" & idficha & ".xls"
-            Try
-                ' Mover el fichero.si existe lo sobreescribe  
-                My.Computer.FileSystem.MoveFile(sArchivoOrigen, _
-                                                sRutaDestino, _
-                                                True)
-                'MsgBox("Ok.", MsgBoxStyle.Information, "Mover archivo")
-                ' errores  
-            Catch ex As Exception
-                'MsgBox(ex.Message.ToString, MsgBoxStyle.Critical)
-            End Try
+            sRutaDestino = "\\192.168.1.10\e\NET\ALIMENTOS\" & idficha & ".xls"
+        ElseIf tipoinforme = 8 Then
+            sRutaDestino = "\\192.168.1.10\e\NET\SEROLOGIA\" & idficha & ".xls"
+        ElseIf tipoinforme = 9 Then
+            sRutaDestino = "\\192.168.1.10\e\NET\PATOLOGIA\" & idficha & ".xls"
+        ElseIf tipoinforme = 10 Then
+            sRutaDestino = "\\192.168.1.10\e\NET\CALIDAD\" & idficha & ".xls"
         ElseIf tipoinforme = 11 Then
-            Dim sArchivoOrigen As String = "C:\INFORMES PARA SUBIR\" & idficha & ".xls"
-            Dim sRutaDestino As String = "\\192.168.1.10\e\NET\AMBIENTAL\" & idficha & ".xls"
-            Try
-                ' Mover el fichero.si existe lo sobreescribe  
-                My.Computer.FileSystem.MoveFile(sArchivoOrigen, _
-                                                sRutaDestino, _
-                                                True)
-                'MsgBox("Ok.", MsgBoxStyle.Information, "Mover archivo")
-                ' errores  
-            Catch ex As Exception
-                'MsgBox(ex.Message.ToString, MsgBoxStyle.Critical)
-            End Try
+            sRutaDestino = "\\192.168.1.10\e\NET\AMBIENTAL\" & idficha & ".xls"
+        ElseIf tipoinforme = 12 Then
+            sRutaDestino = "\\192.168.1.10\e\NET\LACTOMETROS\" & idficha & ".xls"
+        ElseIf tipoinforme = 13 Then
+            sRutaDestino = "\\192.168.1.10\e\NET\NUTRICION\" & idficha & ".xls"
+        ElseIf tipoinforme = 14 Then
+            sRutaDestino = "\\192.168.1.10\e\NET\SUELOS\" & idficha & ".xls"
+        ElseIf tipoinforme = 15 Then
+            sRutaDestino = "\\192.168.1.10\e\NET\Bruselocis en leche\" & idficha & ".xls"
+        ElseIf tipoinforme = 16 Then
+            sRutaDestino = "\\192.168.1.10\e\NET\Efluentes\" & idficha & ".xls"
+        ElseIf tipoinforme = 17 Then
+            sRutaDestino = "\\192.168.1.10\e\NET\BACTEREOLOGIATANQUE\" & idficha & ".xls"
+        ElseIf tipoinforme = 18 Then
+            sRutaDestino = "\\192.168.1.10\e\NET\BACTEREOLOGIACLINICAAEROBICA\" & idficha & ".xls"
+        ElseIf tipoinforme = 19 Then
+            sRutaDestino = "\\192.168.1.10\e\NET\FOLIARES\" & idficha & ".xls"
         ElseIf tipoinforme = 20 Then
-            Dim sArchivoOrigen As String = "C:\INFORMES PARA SUBIR\" & idficha & ".xls"
-            Dim sRutaDestino As String = "\\192.168.1.10\e\NET\TOXICOLOGIA\" & idficha & ".xls"
-            Try
-                ' Mover el fichero.si existe lo sobreescribe  
-                My.Computer.FileSystem.MoveFile(sArchivoOrigen, _
-                                                sRutaDestino, _
-                                                True)
-                'MsgBox("Ok.", MsgBoxStyle.Information, "Mover archivo")
-                ' errores  
-            Catch ex As Exception
-                'MsgBox(ex.Message.ToString, MsgBoxStyle.Critical)
-            End Try
+            sRutaDestino = "\\192.168.1.10\e\NET\TOXICOLOGIA\" & idficha & ".xls"
+        ElseIf tipoinforme = 99 Then
+            sRutaDestino = "\\192.168.1.10\e\NET\OTROS\" & idficha & ".xls"
         End If
+        'Dim sArchivoOrigen As String = "\\192.168.1.10\e\NET\INFORMES PARA SUBIR\" & idficha & ".txt"
+        Dim sArchivoOrigen As String = "C:\INFORMES PARA SUBIR\" & idficha & ".xls"
+
+        Try
+            ' Mover el fichero.si existe lo sobreescribe  
+            My.Computer.FileSystem.MoveFile(sArchivoOrigen, _
+                                            sRutaDestino, _
+                                            True)
+            'MsgBox("Ok.", MsgBoxStyle.Information, "Mover archivo")
+            ' errores  
+        Catch ex As Exception
+            'MsgBox(ex.Message.ToString, MsgBoxStyle.Critical)
+        End Try
     End Sub
     Private Sub moverexcel_otrapc()
         If tipoinforme = 10 Then
@@ -11283,175 +11175,61 @@ controltxt:
         End If
     End Sub
     Private Sub moverpdf()
-        If tipoinforme = 10 Then
-            'Dim sArchivoOrigen As String = "\\192.168.1.10\e\NET\INFORMES PARA SUBIR\" & idficha & ".pdf"
-            Dim sArchivoOrigen As String = "C:\INFORMES PARA SUBIR\" & idficha & ".pdf"
-            Dim sRutaDestino As String = "\\192.168.1.10\e\NET\CALIDAD\" & idficha & ".pdf"
-            Try
-                ' Mover el fichero.si existe lo sobreescribe  
-                My.Computer.FileSystem.MoveFile(sArchivoOrigen, _
-                                                sRutaDestino, _
-                                                True)
-                'MsgBox("Ok.", MsgBoxStyle.Information, "Mover archivo")
-                ' errores  
-            Catch ex As Exception
-                'MsgBox(ex.Message.ToString, MsgBoxStyle.Critical)
-            End Try
-        ElseIf tipoinforme = 1 Then
-            'Dim sArchivoOrigen As String = "\\192.168.1.10\e\NET\INFORMES PARA SUBIR\" & idficha & ".pdf"
-            Dim sArchivoOrigen As String = "C:\INFORMES PARA SUBIR\" & idficha & ".pdf"
-            Dim sRutaDestino As String = "\\192.168.1.10\e\NET\CONTROL_LECHERO\" & idficha & ".pdf"
-            Try
-                ' Mover el fichero.si existe lo sobreescribe  
-                My.Computer.FileSystem.MoveFile(sArchivoOrigen, _
-                                                sRutaDestino, _
-                                                True)
-                'MsgBox("Ok.", MsgBoxStyle.Information, "Mover archivo")
-                ' errores  
-            Catch ex As Exception
-                'MsgBox(ex.Message.ToString, MsgBoxStyle.Critical)
-            End Try
+        Dim sRutaDestino As String
+        If tipoinforme = 1 Then
+            sRutaDestino = "\\192.168.1.10\e\NET\CONTROL_LECHERO\" & idficha & ".pdf"
         ElseIf tipoinforme = 3 Then
-            'Dim sArchivoOrigen As String = "\\192.168.1.10\e\NET\INFORMES PARA SUBIR\" & idficha & ".pdf"
-            Dim sArchivoOrigen As String = "C:\INFORMES PARA SUBIR\" & idficha & ".pdf"
-            Dim sRutaDestino As String = "\\192.168.1.10\e\NET\AGUA\" & idficha & ".pdf"
-            Try
-                ' Mover el fichero.si existe lo sobreescribe  
-                My.Computer.FileSystem.MoveFile(sArchivoOrigen, _
-                                                sRutaDestino, _
-                                                True)
-                'MsgBox("Ok.", MsgBoxStyle.Information, "Mover archivo")
-                ' errores  
-            Catch ex As Exception
-                'MsgBox(ex.Message.ToString, MsgBoxStyle.Critical)
-            End Try
+            sRutaDestino = "\\192.168.1.10\e\NET\AGUA\" & idficha & ".pdf"
         ElseIf tipoinforme = 4 Then
-            'Dim sArchivoOrigen As String = "\\192.168.1.10\e\NET\INFORMES PARA SUBIR\" & idficha & ".pdf"
-            Dim sArchivoOrigen As String = "C:\INFORMES PARA SUBIR\" & idficha & ".pdf"
-            Dim sRutaDestino As String = "\\192.168.1.10\e\NET\ANTIBIOGRAMA\" & idficha & ".pdf"
-            Try
-                ' Mover el fichero.si existe lo sobreescribe  
-                My.Computer.FileSystem.MoveFile(sArchivoOrigen, _
-                                                sRutaDestino, _
-                                                True)
-                'MsgBox("Ok.", MsgBoxStyle.Information, "Mover archivo")
-                ' errores  
-            Catch ex As Exception
-                'MsgBox(ex.Message.ToString, MsgBoxStyle.Critical)
-            End Try
+            sRutaDestino = "\\192.168.1.10\e\NET\ANTIBIOGRAMA\" & idficha & ".pdf"
+        ElseIf tipoinforme = 5 Then
+            sRutaDestino = "\\192.168.1.10\e\NET\PAL\" & idficha & ".pdf"
+        ElseIf tipoinforme = 6 Then
+            sRutaDestino = "\\192.168.1.10\e\NET\PARASITOLOGIA\" & idficha & ".pdf"
         ElseIf tipoinforme = 7 Then
-            'Dim sArchivoOrigen As String = "\\192.168.1.10\e\NET\INFORMES PARA SUBIR\" & idficha & ".pdf"
-            Dim sArchivoOrigen As String = "C:\INFORMES PARA SUBIR\" & idficha & ".pdf"
-            Dim sRutaDestino As String = "\\192.168.1.10\e\NET\ALIMENTOS\" & idficha & ".pdf"
-            Try
-                ' Mover el fichero.si existe lo sobreescribe  
-                My.Computer.FileSystem.MoveFile(sArchivoOrigen, _
-                                                sRutaDestino, _
-                                                True)
-                'MsgBox("Ok.", MsgBoxStyle.Information, "Mover archivo")
-                ' errores  
-            Catch ex As Exception
-                'MsgBox(ex.Message.ToString, MsgBoxStyle.Critical)
-            End Try
+            sRutaDestino = "\\192.168.1.10\e\NET\ALIMENTOS\" & idficha & ".pdf"
+        ElseIf tipoinforme = 8 Then
+            sRutaDestino = "\\192.168.1.10\e\NET\SEROLOGIA\" & idficha & ".pdf"
+        ElseIf tipoinforme = 9 Then
+            sRutaDestino = "\\192.168.1.10\e\NET\PATOLOGIA\" & idficha & ".pdf"
+        ElseIf tipoinforme = 10 Then
+            sRutaDestino = "\\192.168.1.10\e\NET\CALIDAD\" & idficha & ".pdf"
+        ElseIf tipoinforme = 11 Then
+            sRutaDestino = "\\192.168.1.10\e\NET\AMBIENTAL\" & idficha & ".pdf"
+        ElseIf tipoinforme = 12 Then
+            sRutaDestino = "\\192.168.1.10\e\NET\LACTOMETROS\" & idficha & ".pdf"
         ElseIf tipoinforme = 13 Then
-            'Dim sArchivoOrigen As String = "\\192.168.1.10\e\NET\INFORMES PARA SUBIR\" & idficha & ".pdf"
-            Dim sArchivoOrigen As String = "C:\INFORMES PARA SUBIR\" & idficha & ".pdf"
-            Dim sRutaDestino As String = "\\192.168.1.10\e\NET\NUTRICION\" & idficha & ".pdf"
-            Try
-                ' Mover el fichero.si existe lo sobreescribe  
-                My.Computer.FileSystem.MoveFile(sArchivoOrigen, _
-                                                sRutaDestino, _
-                                                True)
-                'MsgBox("Ok.", MsgBoxStyle.Information, "Mover archivo")
-                ' errores  
-            Catch ex As Exception
-                'MsgBox(ex.Message.ToString, MsgBoxStyle.Critical)
-            End Try
+            sRutaDestino = "\\192.168.1.10\e\NET\NUTRICION\" & idficha & ".pdf"
         ElseIf tipoinforme = 14 Then
-            'Dim sArchivoOrigen As String = "\\192.168.1.10\e\NET\INFORMES PARA SUBIR\" & idficha & ".pdf"
-            Dim sArchivoOrigen As String = "C:\INFORMES PARA SUBIR\" & idficha & ".pdf"
-            Dim sRutaDestino As String = "\\192.168.1.10\e\NET\Suelos\" & idficha & ".pdf"
-            Try
-                ' Mover el fichero.si existe lo sobreescribe  
-                My.Computer.FileSystem.MoveFile(sArchivoOrigen, _
-                                                sRutaDestino, _
-                                                True)
-                'MsgBox("Ok.", MsgBoxStyle.Information, "Mover archivo")
-                ' errores  
-            Catch ex As Exception
-                'MsgBox(ex.Message.ToString, MsgBoxStyle.Critical)
-            End Try
+            sRutaDestino = "\\192.168.1.10\e\NET\SUELOS\" & idficha & ".pdf"
         ElseIf tipoinforme = 15 Then
-            'Dim sArchivoOrigen As String = "\\192.168.1.10\e\NET\INFORMES PARA SUBIR\" & idficha & ".pdf"
-            Dim sArchivoOrigen As String = "C:\INFORMES PARA SUBIR\" & idficha & ".pdf"
-            Dim sRutaDestino As String = "\\192.168.1.10\e\NET\Brucelosis en leche\" & idficha & ".pdf"
-            Try
-                ' Mover el fichero.si existe lo sobreescribe  
-                My.Computer.FileSystem.MoveFile(sArchivoOrigen, _
-                                                sRutaDestino, _
-                                                True)
-                'MsgBox("Ok.", MsgBoxStyle.Information, "Mover archivo")
-                ' errores  
-            Catch ex As Exception
-                'MsgBox(ex.Message.ToString, MsgBoxStyle.Critical)
-            End Try
+            sRutaDestino = "\\192.168.1.10\e\NET\Bruselocis en leche\" & idficha & ".pdf"
         ElseIf tipoinforme = 16 Then
-            'Dim sArchivoOrigen As String = "\\192.168.1.10\e\NET\INFORMES PARA SUBIR\" & idficha & ".pdf"
-            Dim sArchivoOrigen As String = "C:\INFORMES PARA SUBIR\" & idficha & ".pdf"
-            Dim sRutaDestino As String = "\\192.168.1.10\e\NET\Efluentes\" & idficha & ".pdf"
-            Try
-                ' Mover el fichero.si existe lo sobreescribe  
-                My.Computer.FileSystem.MoveFile(sArchivoOrigen, _
-                                                sRutaDestino, _
-                                                True)
-                'MsgBox("Ok.", MsgBoxStyle.Information, "Mover archivo")
-                ' errores  
-            Catch ex As Exception
-                'MsgBox(ex.Message.ToString, MsgBoxStyle.Critical)
-            End Try
+            sRutaDestino = "\\192.168.1.10\e\NET\Efluentes\" & idficha & ".pdf"
         ElseIf tipoinforme = 17 Then
-            'Dim sArchivoOrigen As String = "\\192.168.1.10\e\NET\INFORMES PARA SUBIR\" & idficha & ".xls"
-            Dim sArchivoOrigen As String = "C:\INFORMES PARA SUBIR\" & idficha & ".xls"
-            Dim sRutaDestino As String = "\\192.168.1.10\e\NET\ANTIBIOGRAMA\" & idficha & ".xls"
-            Try
-                ' Mover el fichero.si existe lo sobreescribe  
-                My.Computer.FileSystem.MoveFile(sArchivoOrigen, _
-                                                sRutaDestino, _
-                                                True)
-                'MsgBox("Ok.", MsgBoxStyle.Information, "Mover archivo")
-                ' errores  
-            Catch ex As Exception
-                'MsgBox(ex.Message.ToString, MsgBoxStyle.Critical)
-            End Try
-        ElseIf tipoinforme = 11 Then
-            'Dim sArchivoOrigen As String = "\\192.168.1.10\e\NET\INFORMES PARA SUBIR\" & idficha & ".pdf"
-            Dim sArchivoOrigen As String = "C:\INFORMES PARA SUBIR\" & idficha & ".pdf"
-            Dim sRutaDestino As String = "\\192.168.1.10\e\NET\AMBIENTAL\" & idficha & ".pdf"
-            Try
-                ' Mover el fichero.si existe lo sobreescribe  
-                My.Computer.FileSystem.MoveFile(sArchivoOrigen, _
-                                                sRutaDestino, _
-                                                True)
-                'MsgBox("Ok.", MsgBoxStyle.Information, "Mover archivo")
-                ' errores  
-            Catch ex As Exception
-                'MsgBox(ex.Message.ToString, MsgBoxStyle.Critical)
-            End Try
-        ElseIf tipoinforme = 11 Then
-            'Dim sArchivoOrigen As String = "\\192.168.1.10\e\NET\INFORMES PARA SUBIR\" & idficha & ".pdf"
-            Dim sArchivoOrigen As String = "C:\INFORMES PARA SUBIR\" & idficha & ".pdf"
-            Dim sRutaDestino As String = "\\192.168.1.10\e\NET\TOXICOLOGIA\" & idficha & ".pdf"
-            Try
-                ' Mover el fichero.si existe lo sobreescribe  
-                My.Computer.FileSystem.MoveFile(sArchivoOrigen, _
-                                                sRutaDestino, _
-                                                True)
-                'MsgBox("Ok.", MsgBoxStyle.Information, "Mover archivo")
-                ' errores  
-            Catch ex As Exception
-                'MsgBox(ex.Message.ToString, MsgBoxStyle.Critical)
-            End Try
+            sRutaDestino = "\\192.168.1.10\e\NET\BACTEREOLOGIATANQUE\" & idficha & ".pdf"
+        ElseIf tipoinforme = 18 Then
+            sRutaDestino = "\\192.168.1.10\e\NET\BACTEREOLOGIACLINICAAEROBICA\" & idficha & ".pdf"
+        ElseIf tipoinforme = 19 Then
+            sRutaDestino = "\\192.168.1.10\e\NET\FOLIARES\" & idficha & ".pdf"
+        ElseIf tipoinforme = 20 Then
+            sRutaDestino = "\\192.168.1.10\e\NET\TOXICOLOGIA\" & idficha & ".pdf"
+        ElseIf tipoinforme = 99 Then
+            sRutaDestino = "\\192.168.1.10\e\NET\OTROS\" & idficha & ".pdf"
         End If
+        'Dim sArchivoOrigen As String = "\\192.168.1.10\e\NET\INFORMES PARA SUBIR\" & idficha & ".txt"
+        Dim sArchivoOrigen As String = "C:\INFORMES PARA SUBIR\" & idficha & ".pdf"
+
+        Try
+            ' Mover el fichero.si existe lo sobreescribe  
+            My.Computer.FileSystem.MoveFile(sArchivoOrigen, _
+                                            sRutaDestino, _
+                                            True)
+            'MsgBox("Ok.", MsgBoxStyle.Information, "Mover archivo")
+            ' errores  
+        Catch ex As Exception
+            'MsgBox(ex.Message.ToString, MsgBoxStyle.Critical)
+        End Try
     End Sub
     Private Sub moverpdf_otrapc()
         If tipoinforme = 10 Then
@@ -11583,21 +11361,62 @@ controltxt:
         End If
     End Sub
     Private Sub movertxt()
+        Dim sRutaDestino As String
         If tipoinforme = 1 Then
-            'Dim sArchivoOrigen As String = "\\192.168.1.10\e\NET\INFORMES PARA SUBIR\" & idficha & ".txt"
-            Dim sArchivoOrigen As String = "C:\INFORMES PARA SUBIR\" & idficha & ".txt"
-            Dim sRutaDestino As String = "\\192.168.1.10\e\NET\CONTROL_LECHERO\" & idficha & ".txt"
-            Try
-                ' Mover el fichero.si existe lo sobreescribe  
-                My.Computer.FileSystem.MoveFile(sArchivoOrigen, _
-                                                sRutaDestino, _
-                                                True)
-                'MsgBox("Ok.", MsgBoxStyle.Information, "Mover archivo")
-                ' errores  
-            Catch ex As Exception
-                'MsgBox(ex.Message.ToString, MsgBoxStyle.Critical)
-            End Try
+            sRutaDestino = "\\192.168.1.10\e\NET\CONTROL_LECHERO\" & idficha & ".txt"
+        ElseIf tipoinforme = 3 Then
+            sRutaDestino = "\\192.168.1.10\e\NET\AGUA\" & idficha & ".txt"
+        ElseIf tipoinforme = 4 Then
+            sRutaDestino = "\\192.168.1.10\e\NET\ANTIBIOGRAMA\" & idficha & ".txt"
+        ElseIf tipoinforme = 5 Then
+            sRutaDestino = "\\192.168.1.10\e\NET\PAL\" & idficha & ".txt"
+        ElseIf tipoinforme = 6 Then
+            sRutaDestino = "\\192.168.1.10\e\NET\PARASITOLOGIA\" & idficha & ".txt"
+        ElseIf tipoinforme = 7 Then
+            sRutaDestino = "\\192.168.1.10\e\NET\ALIMENTOS\" & idficha & ".txt"
+        ElseIf tipoinforme = 8 Then
+            sRutaDestino = "\\192.168.1.10\e\NET\SEROLOGIA\" & idficha & ".txt"
+        ElseIf tipoinforme = 9 Then
+            sRutaDestino = "\\192.168.1.10\e\NET\PATOLOGIA\" & idficha & ".txt"
+        ElseIf tipoinforme = 10 Then
+            sRutaDestino = "\\192.168.1.10\e\NET\CALIDAD\" & idficha & ".txt"
+        ElseIf tipoinforme = 11 Then
+            sRutaDestino = "\\192.168.1.10\e\NET\AMBIENTAL\" & idficha & ".txt"
+        ElseIf tipoinforme = 12 Then
+            sRutaDestino = "\\192.168.1.10\e\NET\LACTOMETROS\" & idficha & ".txt"
+        ElseIf tipoinforme = 13 Then
+            sRutaDestino = "\\192.168.1.10\e\NET\NUTRICION\" & idficha & ".txt"
+        ElseIf tipoinforme = 14 Then
+            sRutaDestino = "\\192.168.1.10\e\NET\SUELOS\" & idficha & ".txt"
+        ElseIf tipoinforme = 15 Then
+            sRutaDestino = "\\192.168.1.10\e\NET\Bruselocis en leche\" & idficha & ".txt"
+        ElseIf tipoinforme = 16 Then
+            sRutaDestino = "\\192.168.1.10\e\NET\Efluentes\" & idficha & ".txt"
+        ElseIf tipoinforme = 17 Then
+            sRutaDestino = "\\192.168.1.10\e\NET\BACTEREOLOGIATANQUE\" & idficha & ".txt"
+        ElseIf tipoinforme = 18 Then
+            sRutaDestino = "\\192.168.1.10\e\NET\BACTEREOLOGIACLINICAAEROBICA\" & idficha & ".txt"
+        ElseIf tipoinforme = 19 Then
+            sRutaDestino = "\\192.168.1.10\e\NET\FOLIARES\" & idficha & ".txt"
+        ElseIf tipoinforme = 20 Then
+            sRutaDestino = "\\192.168.1.10\e\NET\TOXICOLOGIA\" & idficha & ".txt"
+        ElseIf tipoinforme = 99 Then
+            sRutaDestino = "\\192.168.1.10\e\NET\OTROS\" & idficha & ".txt"
         End If
+        'Dim sArchivoOrigen As String = "\\192.168.1.10\e\NET\INFORMES PARA SUBIR\" & idficha & ".txt"
+        Dim sArchivoOrigen As String = "C:\INFORMES PARA SUBIR\" & idficha & ".txt"
+
+        Try
+            ' Mover el fichero.si existe lo sobreescribe  
+            My.Computer.FileSystem.MoveFile(sArchivoOrigen, _
+                                            sRutaDestino, _
+                                            True)
+            'MsgBox("Ok.", MsgBoxStyle.Information, "Mover archivo")
+            ' errores  
+        Catch ex As Exception
+            'MsgBox(ex.Message.ToString, MsgBoxStyle.Critical)
+        End Try
+
     End Sub
     Private Sub movertxt_otrapc()
         If tipoinforme = 1 Then
@@ -16014,6 +15833,63 @@ controltxt:
         End If
         email = ""
     End Sub
+    Private Sub enviaremailCajasAtrasadas(ByVal clienteid As Long)
+        Dim _Message As New System.Net.Mail.MailMessage()
+        Dim _SMTP As New System.Net.Mail.SmtpClient
+        Dim email As String = ""
+        Dim destinatario As String = ""
+        Dim c As New dCliente
+        c.ID = clienteid
+        c = c.buscar
+        If Not c Is Nothing Then
+            If c.EMAIL <> "" Then
+                email = Trim(c.EMAIL)
+            End If
+            If Not c.NOMBRE <> "" Then
+                destinatario = c.NOMBRE
+            End If
+        End If
+        If email <> "" And email <> "no aportado" Then
+            'CONFIGURACIÓN DEL STMP 
+            _SMTP.Credentials = New System.Net.NetworkCredential("colaveco@gmail.com", "CLV19912021Colaveco30")
+            _SMTP.Host = "smtp.gmail.com"
+            _SMTP.Port = 587 '465
+            _SMTP.EnableSsl = True
+            ' CONFIGURACION DEL MENSAJE 
+            '_Message.[To].Add("computos@colaveco.com")
+            _Message.[To].Add(email)
+            'Cuenta de Correo al que se le quiere enviar el e-mail 
+            _Message.From = New System.Net.Mail.MailAddress("colaveco@gmail.com", "COLAVECO", System.Text.Encoding.UTF8)
+            'Quien lo envía 
+            _Message.Subject = "Orden de compra" & " - " & compraid
+            'Sujeto del e-mail 
+            _Message.SubjectEncoding = System.Text.Encoding.UTF8
+            'Codificacion 
+            _Message.Body = "Sres. de" & " " & destinatario & ", " & "por medio del presente correo adjuntamos orden de compra. Desde ya gracias. COLAVECO"
+            'contenido del mail 
+            _Message.BodyEncoding = System.Text.Encoding.UTF8 '
+            _Message.Priority = System.Net.Mail.MailPriority.Normal
+            _Message.IsBodyHtml = False
+            ' ADICION DE DATOS ADJUNTOS ‘
+            Dim _File As String = "\\192.168.1.10\e\NET\COMPRAS\OC\OC_" & compraid & ".xls" 'archivo que se quiere adjuntar ‘
+            Dim _Attachment As New System.Net.Mail.Attachment(_File, System.Net.Mime.MediaTypeNames.Application.Octet) '
+            _Message.Attachments.Add(_Attachment) 'ENVIO 
+            Try
+                _SMTP.Send(_Message)
+                'MessageBox.Show("Correo enviado!", "Correo", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                marcarenvio()
+
+            Catch ex As System.Net.Mail.SmtpException ' MessageBox.Show(ex.ToString) 
+                'MessageBox.Show("Falla al enviar el correo!", "Correo", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Exit Sub
+            End Try
+            _File = ""
+            _Attachment = Nothing
+        Else
+            MsgBox("No tiene dirección de correo cargada")
+        End If
+        email = ""
+    End Sub
     Private Sub enviarcompras()
         Dim c As New dCompras
         Dim lista As New ArrayList
@@ -16022,6 +15898,19 @@ controltxt:
             For Each c In lista
                 compraid = c.ID
                 enviaremailcompras()
+            Next
+        End If
+    End Sub
+    Private Sub enviarMailCajas()
+        Dim ListaEC As New dEnvioCajas
+        Dim lista As New ArrayList
+        lista = ListaEC.buscarCajasAtrasadas
+        If Not lista Is Nothing Then
+            For Each c In lista
+                Dim enviocaja As New dEnvioCajas
+                enviocaja = enviocaja.buscarCajasConFechaPorPedido(c.ID)
+                clienteid = c.IDPRODUCTOR
+                enviaremailCajasAtrasadas(clienteid)
             Next
         End If
     End Sub

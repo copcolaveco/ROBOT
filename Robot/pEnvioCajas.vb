@@ -147,6 +147,69 @@
             Return Nothing
         End Try
     End Function
+    Public Function buscarCajasAtrasadas(ByVal o As Object) As ArrayList
+        Dim obj As dEnvioCajas = CType(o, dEnvioCajas)
+
+        Try
+            Dim Lista As New ArrayList
+            Dim Ds As New DataSet
+            Ds = Me.EjecutarSQL("SELECT p.id, p.idproductor, e.fechaenvio FROM enviocajas e inner join pedidos p on p.id = e.idpedido WHERE e.recibido = 0 and p.agua > 0 ")
+            If Ds.Tables(0).Rows.Count = 0 Then
+                Return Nothing
+            Else
+                Dim unaFila As DataRow
+                For Each unaFila In Ds.Tables(0).Rows
+                    Dim e As New dEnvioCajas
+                    Dim p As New dPedidos
+                    p.ID = CType(unaFila.Item(0), Long)
+                    p.IDPRODUCTOR = CType(unaFila.Item(1), Long)
+                    Lista.Add(p)
+                Next
+                Return Lista
+            End If
+        Catch ex As Exception
+            Return Nothing
+        End Try
+    End Function
+    Public Function buscarCajasConFechaPorPedido(ByVal idpedido As Long) As dEnvioCajas
+        'Dim obj As dEnvioCajas = CType(o, dEnvioCajas)
+        Dim e As New dEnvioCajas
+        Try
+            Dim Ds As New DataSet
+            Ds = Me.EjecutarSQL("SELECT id, idpedido, idproductor,idcaja, ifnull(gradilla1,''), ifnull(gradilla2,''), ifnull(gradilla3,''), frascos,idempresa, envio, fechaenvio, observaciones, enviado, idagencia, recibo, fecharecibo, recibido, cliente, obsrecibo, responsable, cargada, convenio FROM enviocajas WHERE idpedido = " & idpedido & "")
+
+            If Ds.Tables(0).Rows.Count > 0 Then
+                Dim unaFila As DataRow
+                unaFila = Ds.Tables(0).Rows(0)
+                e.ID = CType(unaFila.Item(0), Long)
+                e.IDPEDIDO = CType(unaFila.Item(1), Long)
+                e.IDPRODUCTOR = CType(unaFila.Item(2), Long)
+                e.IDCAJA = CType(unaFila.Item(3), String)
+                e.GRADILLA1 = CType(unaFila.Item(4), String)
+                e.GRADILLA2 = CType(unaFila.Item(5), String)
+                e.GRADILLA3 = CType(unaFila.Item(6), String)
+                e.FRASCOS = CType(unaFila.Item(7), Integer)
+                e.IDEMPRESA = CType(unaFila.Item(8), Integer)
+                e.ENVIO = CType(unaFila.Item(9), String)
+                e.FECHAENVIO = CType(unaFila.Item(10), String)
+                e.OBSERVACIONES = CType(unaFila.Item(11), String)
+                e.ENVIADO = CType(unaFila.Item(12), Integer)
+                e.IDAGENCIA = CType(unaFila.Item(13), Integer)
+                e.RECIBO = CType(unaFila.Item(14), String)
+                e.FECHARECIBO = CType(unaFila.Item(15), String)
+                e.RECIBIDO = CType(unaFila.Item(16), Integer)
+                e.CLIENTE = CType(unaFila.Item(17), Long)
+                e.OBSRECIBO = CType(unaFila.Item(18), String)
+                e.RESPONSABLE = CType(unaFila.Item(19), Integer)
+                e.CARGADA = CType(unaFila.Item(20), Integer)
+                e.CONVENIO = CType(unaFila.Item(21), Integer)
+                Return e
+            End If
+            Return Nothing
+        Catch ex As Exception
+            Return Nothing
+        End Try
+    End Function
     Public Function buscarultimoenvio(ByVal o As Object) As dEnvioCajas
         Dim obj As dEnvioCajas = CType(o, dEnvioCajas)
         Dim e As New dEnvioCajas
