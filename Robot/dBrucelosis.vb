@@ -195,7 +195,10 @@
         Dim c As New pBrucelosis
         Return c.listarporfichaneg(texto)
     End Function
-
+    Public Function brucelosisPositivaPorFicha(ByVal texto As Long) As Long
+        Dim c As New pBrucelosis
+        Return c.brucelosisPositivaPorFicha(texto)
+    End Function
     Public Function listar1_2(ByVal texto As Long) As ArrayList
         Dim c As New pBrucelosis
         Return c.listar1_2(texto)

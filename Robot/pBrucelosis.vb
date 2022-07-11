@@ -247,6 +247,26 @@
             Return Nothing
         End Try
     End Function
+    Public Function brucelosisPositivaPorFicha(ByVal texto As Long) As Long
+        Dim sql As String = ("SELECT Distinct resultado FROM brucelosis where ficha = " & texto & " and resultado = 1 ")
+        Try
+            Dim result As New Long
+            Dim Ds As New DataSet
+            Ds = Me.EjecutarSQL(sql)
+            If Ds.Tables(0).Rows.Count = 0 Then
+                Return Nothing
+            Else
+                Dim unaFila As DataRow
+                For Each unaFila In Ds.Tables(0).Rows
+                    Dim c As New dBrucelosis
+                    c.RESULTADO = CType(unaFila.Item(0), Integer)
+                Next
+                Return result
+            End If
+        Catch ex As Exception
+            Return Nothing
+        End Try
+    End Function
     Public Function listarporfichaneg(ByVal texto As Long) As ArrayList
         Dim sql As String = ("SELECT id, idgrupal, columna, fila, fecha, ficha, muestra, resultado, operador, marca FROM brucelosis where ficha = " & texto & " and resultado =0 ORDER BY muestra ASC")
         Try

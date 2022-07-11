@@ -255,6 +255,9 @@ Public Class FormInicio
             If hora = 18 And minuto > 30 And minuto < 35 Then
                 calcularsaldos()
             End If
+            If hora = 9 And minuto > 5 And minuto < 10 Then
+                'clientesAtrasadosCajas()
+            End If
             'mover archivos subidos
             Dim hoy2 As Date = Now
             Dim hora2 As Integer = 0
@@ -8327,6 +8330,7 @@ controltxt2:
         Dim subidoxls As Integer = 0
         Dim subidopdf As Integer = 0
         Dim subidotxt As Integer = 0
+        Dim cliente As New dCliente
         lista = pi.listarparasubirbrucelosis
         If Not lista Is Nothing Then
             If lista.Count > 0 Then
@@ -8344,6 +8348,7 @@ controltxt2:
                         tipoinforme = sa.IDTIPOINFORME
                         p.ID = sa.IDPRODUCTOR
                         p = p.buscar
+                        cliente = p
                         If Not p Is Nothing Then
                             email = ""
                             email2 = ""
@@ -8444,6 +8449,15 @@ controltxt:
                         est = Nothing
                         '****************************
                         envio_mail_informes()
+
+                        'Envio Mail Mauricio y Cecilia Brucelosis positivo
+                        Dim brucelosis As New dBrucelosis
+                        brucelosis.FICHA = s.ID
+                        brucelosis = brucelosis.buscarxficha()
+
+                        If (brucelosis.RESULTADO = 1) Then
+                            mailBrucelosisPositiva(s, cliente)
+                        End If
                     End If
                 Next
             End If
@@ -16039,6 +16053,119 @@ controltxt:
             eremito = ""
             texto = ""
     End Sub
+    Private Sub clientesAtrasadosCajas(ByVal _id As Long)
+        Dim p As New dPedidos
+        p.ID = _id
+        p = p.buscar
+        Dim eagencia As String = ""
+        Dim eremito As String = ""
+        Dim hora As Date = Now()
+        Dim horaenvio As String
+        Dim horaenvio2 As Integer
+        horaenvio = Format(hora, "yyyy-MM-dd HH:mm:ss")
+        horaenvio2 = Mid(horaenvio, 12, 2)
+        Dim _Message As New System.Net.Mail.MailMessage()
+        Dim _SMTP As New System.Net.Mail.SmtpClient
+        Dim c As New dCliente
+        Dim pw_com As New dProductorWeb_com
+        Dim env As New dEnvioCajas
+        Dim ag As New dEmpresaT
+        ag.ID = p.IDAGENCIA
+        ag = ag.buscar
+        eagencia = ag.NOMBRE
+        Dim texto As String = ""
+        Dim id As Long = p.IDPRODUCTOR 'CType(TextIdProductor.Text, Long)
+        c.ID = id 'Val(TextIdProductor.Text)
+        c = c.buscar
+        If Not c Is Nothing Then
+            email = ""
+            email2 = ""
+            If c.NOT_EMAIL_FRASCOS1 <> "" Then
+                email = RTrim(c.NOT_EMAIL_FRASCOS1)
+            End If
+            If c.NOT_EMAIL_FRASCOS2 <> "" Then
+                email2 = RTrim(c.NOT_EMAIL_FRASCOS2)
+            End If
+            If email = "" Then
+                If email2 = "" Then
+                    If c.EMAIL <> "" Then
+                        email = RTrim(c.EMAIL)
+                    End If
+                Else
+                    email = email2
+                End If
+            Else
+                If email2 = "" Then
+                    email = email
+                Else
+                    email = email & "," & email2
+                End If
+            End If
+            If Not c.USUARIO_WEB = "" Then
+                pw_com.USUARIO = c.USUARIO_WEB
+                pw_com = pw_com.buscar
+                If Not pw_com Is Nothing Then
+                    celular = Replace(pw_com.ENVIAR_SMS, " ", "")
+                End If
+            End If
+        End If
+        'eagencia = ComboAgencia.Text
+        Dim idped As Long = p.ID 'CType(TextId.Text, Long)
+        Dim lista As New ArrayList
+        lista = env.listarporid(idped)
+        If Not lista Is Nothing Then
+            If lista.Count > 0 Then
+                For Each env In lista
+                    texto = texto & env.IDCAJA & ", "
+                    eremito = env.ENVIO
+                Next
+            End If
+        End If
+        If Not String.IsNullOrEmpty(email) And String.IsNullOrEmpty(email2) Then
+
+            'CONFIGURACIÓN DEL STMP 
+            _SMTP.Credentials = New System.Net.NetworkCredential("notificaciones@colaveco.com.uy", "19912021Notificaciones")
+            _SMTP.Host = "170.249.199.66"
+            _SMTP.Port = 25
+            _SMTP.EnableSsl = False
+
+            ' CONFIGURACION DEL MENSAJE 
+            _Message.[To].Add(email)
+            _Message.[To].Add("envios@colaveco.com.uy")
+            'Cuenta de Correo al que se le quiere enviar el e-mail 
+            _Message.From = New System.Net.Mail.MailAddress("notificaciones@colaveco.com.uy", "COLAVECO", System.Text.Encoding.UTF8)
+            'Quien lo envía 
+            _Message.Subject = "Envío de cajas"
+            'Sujeto del e-mail 
+            _Message.SubjectEncoding = System.Text.Encoding.UTF8
+            'Codificacion 
+            '_Message.Body = "Se han enviado las siguientes cajas:" & " " & ecaja1 & ", " & "por" & " " & eagencia & " " & "envío nº" & " " & eremito & ""
+            If eremito <> "" Then
+                _Message.Body = "Colaveco despachó la/s siguiente/s caja/s Nº " & texto & " por agencia" & " " & eagencia & ", " & "envío nº" & " " & eremito
+            Else
+                _Message.Body = "Colaveco despachó la/s siguiente/s caja/s Nº " & texto & " por agencia" & " " & eagencia
+            End If
+            'contenido del mail 
+            _Message.BodyEncoding = System.Text.Encoding.UTF8 '
+            _Message.Priority = System.Net.Mail.MailPriority.Normal
+            _Message.IsBodyHtml = False
+            ' ADICION DE DATOS ADJUNTOS ‘
+            'Dim _File As String = My.Application.Info.DirectoryPath & "archivo" 'archivo que se quiere adjuntar ‘
+            'Dim _Attachment As New System.Net.Mail.Attachment(_File, System.Net.Mime.MediaTypeNames.Application.Octet) '
+            '_Message.Attachments.Add(_Attachment) 'ENVIO 
+            Try
+                _SMTP.Send(_Message)
+                'MessageBox.Show("Correo enviado!", "Correo", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Catch ex As System.Net.Mail.SmtpException ' MessageBox.Show(ex.ToString) 
+            End Try
+        Else
+            'MsgBox("Este cliente no tiene correo electrónico ingresado, por lo tanto no se le envía aviso.")
+        End If
+        email = ""
+        eagencia = ""
+        eremito = ""
+        texto = ""
+    End Sub
 
     Function IsValidEmailAddress(ByVal emailAddress As String) As Boolean
         Dim valid As Boolean = True
@@ -16135,6 +16262,48 @@ controltxt:
             End If
         End If
         _email = ""
+    End Sub
+
+    Private Sub mailBrucelosisPositiva(ByVal sa As dSolicitudAnalisis, ByVal cli As dCliente)
+        Dim _Message As New System.Net.Mail.MailMessage()
+        Dim _SMTP As New System.Net.Mail.SmtpClient
+        Dim _informe As String = ""
+        Dim _cliente As String = ""
+        Dim _email As String = ""
+        Dim _texto As String = ""
+        Dim _adjunto As String = ""
+
+        'CONFIGURACIÓN DEL STMP 
+        _SMTP.Credentials = New System.Net.NetworkCredential("notificaciones@colaveco.com.uy", "19912021Notificaciones")
+        _SMTP.Host = "170.249.199.66"
+        _SMTP.Port = 25
+        _SMTP.EnableSsl = False
+
+        ' CONFIGURACION DEL MENSAJE 
+        _Message.[To].Add("envios@colaveco.com.uy")
+        _Message.[To].Add("gerencia@colaveco.com.uy")
+        _Message.[To].Add("laboratorio@colaveco.com.uy")
+        'Cuenta de Correo al que se le quiere enviar el e-mail 
+        _Message.From = New System.Net.Mail.MailAddress("notificaciones@colaveco.com.uy", "COLAVECO", System.Text.Encoding.UTF8)
+        'Quien lo envía 
+        _Message.Subject = "Brucelosis Positiva"
+        'Sujeto del e-mail 
+        _Message.SubjectEncoding = System.Text.Encoding.UTF8
+        'Codificacion
+        _texto = "En el dia de hoy se envio al cliente " & cli.NOMBRE & ", en la Ficha: " & sa.ID & " con el resultado BRUCELOSIS POSITIVO. Esta ficha ingreso el " & sa.FECHAINGRESO.ToString() & ", otros datos de la solicitud: Temperatura: " & sa.TEMPERATURA & ", N° de muestras: " & sa.NMUESTRAS
+        _Message.Body = _texto
+        'contenido del mail 
+        _Message.BodyEncoding = System.Text.Encoding.UTF8 '
+        _Message.Priority = System.Net.Mail.MailPriority.Normal
+        _Message.IsBodyHtml = False
+        ' ADICION DE DATOS ADJUNTOS ‘
+        'Dim _File As String = _adjunto 'archivo que se quiere adjuntar ‘
+        'Dim _Attachment As New System.Net.Mail.Attachment(_File, System.Net.Mime.MediaTypeNames.Application.Octet) '
+        '_Message.Attachments.Add(_Attachment) 'ENVIO 
+        Try
+            _SMTP.Send(_Message)
+        Catch ex As System.Net.Mail.SmtpException ' MessageBox.Show(ex.ToString) 
+        End Try
     End Sub
 
 #End Region
