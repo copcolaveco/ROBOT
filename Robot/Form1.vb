@@ -8452,7 +8452,7 @@ controltxt:
 
                         'Envio Mail Mauricio y Cecilia Brucelosis positivo
                         Dim brucelosis As New dBrucelosis
-                        brucelosis.FICHA = s.ID
+                        brucelosis.FICHA = idficha
                         brucelosis = brucelosis.buscarxficha()
 
                         If (brucelosis.RESULTADO = 1) Then
@@ -14795,6 +14795,8 @@ controltxt:
         Dim archivo As String = ""
         archivo = idficha
         email = "unepi@mgap.gub.uy"
+        Dim _File As String
+        Dim _FileExcel As String
         If email <> "" And email <> "no aportado" Then
             'CONFIGURACIÓN DEL STMP 
             _SMTP.Credentials = New System.Net.NetworkCredential("notificaciones@colaveco.com.uy", "19912021Notificaciones")
@@ -14802,7 +14804,14 @@ controltxt:
             _SMTP.Port = 25
             _SMTP.EnableSsl = False
             _Message.[To].Add(email)
+
+            'Solicitudes_It 265
+            _Message.[To].Add("evitale@mgap.gub.uy")
+            _Message.[To].Add("gmautone@mgap.gub.uy")
+            _Message.[To].Add("pcharbonnier@mgap.gub.uy")
+
             _Message.[To].Add("envios@colaveco.com.uy")
+
             'Cuenta de Correo al que se le quiere enviar el e-mail 
             _Message.From = New System.Net.Mail.MailAddress("notificaciones@colaveco.com.uy", "COLAVECO", System.Text.Encoding.UTF8)
             '_Message.From = New System.Net.Mail.MailAddress("colaveco@gmail.com", "COLAVECO", System.Text.Encoding.UTF8)
@@ -14816,20 +14825,32 @@ controltxt:
             _Message.BodyEncoding = System.Text.Encoding.UTF8 '
             _Message.Priority = System.Net.Mail.MailPriority.Normal
             _Message.IsBodyHtml = False
-            ' ADICION DE DATOS ADJUNTOS ‘
-            'Dim _File As String = "\\192.168.1.10\e\NET\INFORMES PARA SUBIR\" & archivo & ".xls" 'archivo que se quiere adjuntar ‘
-            Dim _File As String = ""
+            ' ADICION DE DATOS ADJUNTOS
+
+            'Solicitud 265, envios MGAP EXCEL
+            If nombre_pc = "ROBOT" Then
+                _FileExcel = "C:\INFORMES PARA SUBIR\" & archivo & ".xls"
+            Else
+                _FileExcel = "\\ROBOT\\INFORMES PARA SUBIR\" & archivo & ".xls"
+            End If
+
             If nombre_pc = "ROBOT" Then
                 _File = "C:\INFORMES PARA SUBIR\" & archivo & ".pdf" 'archivo que se quiere adjuntar ‘
             Else
                 _File = "\\ROBOT\\INFORMES PARA SUBIR\" & archivo & ".pdf" 'archivo que se quiere adjuntar ‘
             End If
-            Dim _Attachment As New System.Net.Mail.Attachment(_File, System.Net.Mime.MediaTypeNames.Application.Octet) '
+
+            Dim _Attachment As New System.Net.Mail.Attachment(_File, System.Net.Mime.MediaTypeNames.Application.Octet)
+
+            Dim _Attachment2 As New System.Net.Mail.Attachment(_FileExcel, System.Net.Mime.MediaTypeNames.Application.Octet)
+
             _Message.Attachments.Add(_Attachment) 'ENVIO 
+            _Message.Attachments.Add(_Attachment2)
             Try
                 _SMTP.Send(_Message)
-                'MessageBox.Show("Correo enviado!", "Correo", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                MessageBox.Show("Se a enviado el correo !", "Correo", MessageBoxButtons.OK, MessageBoxIcon.Information)
             Catch ex As System.Net.Mail.SmtpException ' MessageBox.Show(ex.ToString) 
+                MessageBox.Show("Correo NO enviado al MGAP !", "Correo", MessageBoxButtons.OK, MessageBoxIcon.Information)
             End Try
         End If
         email = ""

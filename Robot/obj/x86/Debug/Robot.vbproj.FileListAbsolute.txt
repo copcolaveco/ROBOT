@@ -88,3 +88,4 @@ C:\Users\Usduario\Documents\Robot\Robot\Robot\obj\x86\Debug\Robot.application
 C:\Users\Usduario\Documents\Robot\Robot\Robot\obj\x86\Debug\Robot.exe
 C:\Users\Usduario\Documents\Robot\Robot\Robot\obj\x86\Debug\Robot.xml
 C:\Users\Usduario\Documents\Robot\Robot\Robot\obj\x86\Debug\Robot.pdb
+C:\Users\Usduario\Documents\Robot\ROBOT\Robot\obj\x86\Debug\Robot.vbprojResolveAssemblyReference.cache
