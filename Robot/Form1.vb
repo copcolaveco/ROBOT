@@ -217,7 +217,7 @@ Public Class FormInicio
             ListBox1.Items.Clear()
             ListBox1.Items.Add(Now)
             ListBox1.Items.Add("Subiendo informes de suelos")
-            subir_informes_suelos() ' SUELOS
+51:         subir_informes_suelos() ' SUELOS
             ListBox1.Items.Clear()
             ListBox1.Items.Add(Now)
             ListBox1.Items.Add("Subiendo informes de brucelosis")
@@ -248,7 +248,6 @@ Public Class FormInicio
                 If dia < 27 Then
                     If hora > 9 Then
                         enviarcompras()
-                        'enviarMailCajas()
                     End If
                 End If
             End If
@@ -4205,7 +4204,7 @@ Public Class FormInicio
                         If Not c Is Nothing Then
                             If c.CRIOSCOPIA <> -1 Then
                                 Dim valcrioscopia As Double = Val(c.CRIOSCOPIA) * -1 / 1000
-                                If valcrioscopia > -0.51 Or valcrioscopia < -0.54 Then
+                                If valcrioscopia > -0.512 And valcrioscopia < 0 Then
                                     x1hoja.Cells(fila, columna).interior.color = RGB(192, 192, 192)
                                 End If
                                 x1hoja.Cells(fila, columna).formula = valcrioscopia.ToString("##,###0.000")
@@ -9429,7 +9428,7 @@ controltxt:
         End If
         If enviarcopia <> "" Then
             'CONFIGURACIÓN DEL STMP 
-            _SMTP.Credentials = New System.Net.NetworkCredential("notificaciones@colaveco.com.uy", "J]e5$5c2(Qnl")
+            _SMTP.Credentials = New System.Net.NetworkCredential("notificaciones@colaveco.com.uy", "-]$]Mo8z1kr3")
             _SMTP.Host = "170.249.199.66"
             _SMTP.Port = 25
             _SMTP.EnableSsl = False
@@ -10214,7 +10213,7 @@ controltxt:
                 Else : MsgBox("Error", MsgBoxStyle.Critical, "Atención")
                 End If
             End If
-        ElseIf tipoinforme = 9 Then 'SI EL TIPO DE INFORME ES DE PATOLOGÍA - TOXICOLOGÍA
+        ElseIf tipoinforme = 9 Or tipoinforme = 20 Then 'SI EL TIPO DE INFORME ES DE PATOLOGÍA - TOXICOLOGÍA
             Dim patw_com As New dPatologiaWeb_com
             Dim pw_com As New dProductorWeb_com
             pw_com.USUARIO = productorweb_com
@@ -10963,7 +10962,7 @@ controltxt:
             carpeta = "productos_subproductos"
         ElseIf tipoinforme = 8 Then
             carpeta = "serologia"
-        ElseIf tipoinforme = 9 Then
+        ElseIf tipoinforme = 9 Or tipoinforme = 20 Then
             carpeta = "patologia"
         ElseIf tipoinforme = 10 Then
             carpeta = "calidad_de_leche"
@@ -12611,7 +12610,7 @@ controltxt:
             End If
         ElseIf tipoinformesw = "Efluentes" Then 'SI EL TIPO DE INFORME ES DE BACTERIOLOGIA Y ANTIBIOGRAMA
             tipoinforme = 16
-            Dim ew_com As New defluentesWeb_com
+            Dim ew_com As New dEfluentesWeb_com
             Dim pw_com As New dProductorWeb_com
             pw_com.USUARIO = productorweb_com
             pw_com = pw_com.buscar
@@ -14583,7 +14582,7 @@ controltxt:
             & "Administración - COLAVECO"
         If email <> "" And email <> "no aportado" Then
             'CONFIGURACIÓN DEL STMP 
-            _SMTP.Credentials = New System.Net.NetworkCredential("notificaciones@colaveco.com.uy", "J]e5$5c2(Qnl")
+            _SMTP.Credentials = New System.Net.NetworkCredential("notificaciones@colaveco.com.uy", "-]$]Mo8z1kr3")
             _SMTP.Host = "170.249.199.66"
             _SMTP.Port = 25
             _SMTP.EnableSsl = False
@@ -14755,7 +14754,7 @@ controltxt:
         End If
         If sms <> "" Then
             'CONFIGURACIÓN DEL STMP 
-            _SMTP.Credentials = New System.Net.NetworkCredential("notificaciones@colaveco.com.uy", "J]e5$5c2(Qnl")
+            _SMTP.Credentials = New System.Net.NetworkCredential("notificaciones@colaveco.com.uy", "-]$]Mo8z1kr3")
             _SMTP.Host = "170.249.199.66"
             _SMTP.Port = 25
             _SMTP.EnableSsl = False
@@ -14802,7 +14801,7 @@ controltxt:
         Dim _FileExcel As String
         If email <> "" And email <> "no aportado" Then
             'CONFIGURACIÓN DEL STMP 
-            _SMTP.Credentials = New System.Net.NetworkCredential("notificaciones@colaveco.com.uy", "J]e5$5c2(Qnl")
+            _SMTP.Credentials = New System.Net.NetworkCredential("notificaciones@colaveco.com.uy", "-]$]Mo8z1kr3")
             _SMTP.Host = "170.249.199.66"
             _SMTP.Port = 25
             _SMTP.EnableSsl = False
@@ -14812,6 +14811,7 @@ controltxt:
             _Message.[To].Add("evitale@mgap.gub.uy")
             _Message.[To].Add("gmautone@mgap.gub.uy")
             _Message.[To].Add("pcharbonnier@mgap.gub.uy")
+            _Message.CC.Add("elisapositivo@mgap.gub.uy")
 
             _Message.[To].Add("envios@colaveco.com.uy")
 
@@ -14868,7 +14868,7 @@ controltxt:
         email = "decano@fvet.edu.uy"
         If email <> "" And email <> "no aportado" Then
             'CONFIGURACIÓN DEL STMP 
-            _SMTP.Credentials = New System.Net.NetworkCredential("notificaciones@colaveco.com.uy", "J]e5$5c2(Qnl")
+            _SMTP.Credentials = New System.Net.NetworkCredential("notificaciones@colaveco.com.uy", "-]$]Mo8z1kr3")
             _SMTP.Host = "170.249.199.66"
             _SMTP.Port = 25
             _SMTP.EnableSsl = False
@@ -15572,7 +15572,7 @@ controltxt:
         If tipoinforme = "Nutrición" Or tipoinforme = "Suelos" Then
             If email <> "" And email <> "no aportado" Then
                 'CONFIGURACIÓN DEL STMP 
-                _SMTP.Credentials = New System.Net.NetworkCredential("notificaciones@colaveco.com.uy", "J]e5$5c2(Qnl")
+                _SMTP.Credentials = New System.Net.NetworkCredential("notificaciones@colaveco.com.uy", "-]$]Mo8z1kr3")
                 _SMTP.Host = "170.249.199.66"
                 _SMTP.Port = 25
                 _SMTP.EnableSsl = False
@@ -15623,7 +15623,7 @@ controltxt:
                     email = Replace(email, ",", "")
                 End If
                 'CONFIGURACIÓN DEL STMP 
-                _SMTP.Credentials = New System.Net.NetworkCredential("notificaciones@colaveco.com.uy", "J]e5$5c2(Qnl")
+                _SMTP.Credentials = New System.Net.NetworkCredential("notificaciones@colaveco.com.uy", "-]$]Mo8z1kr3")
                 _SMTP.Host = "170.249.199.66"
                 _SMTP.Port = 25
                 _SMTP.EnableSsl = False
@@ -15790,7 +15790,7 @@ controltxt:
         End If
         If sms <> "" Then
             'CONFIGURACIÓN DEL STMP 
-            _SMTP.Credentials = New System.Net.NetworkCredential("notificaciones@colaveco.com.uy", "J]e5$5c2(Qnl")
+            _SMTP.Credentials = New System.Net.NetworkCredential("notificaciones@colaveco.com.uy", "-]$]Mo8z1kr3")
             _SMTP.Host = "170.249.199.66"
             _SMTP.Port = 25
             _SMTP.EnableSsl = False
@@ -15842,7 +15842,7 @@ controltxt:
         End If
         If email <> "" And email <> "no aportado" Then
             'CONFIGURACIÓN DEL STMP 
-            _SMTP.Credentials = New System.Net.NetworkCredential("laboratorio@colaveco.com.uy", "19912021Laboratorio")
+            _SMTP.Credentials = New System.Net.NetworkCredential("laboratorio@colaveco.com.uy", "C1nIpB{tFYvp")
             _SMTP.Host = "170.249.199.66"
             _SMTP.Port = 25
             _SMTP.EnableSsl = False
@@ -15900,7 +15900,7 @@ controltxt:
         End If
         If email <> "" And email <> "no aportado" Then
             'CONFIGURACIÓN DEL STMP 
-            _SMTP.Credentials = New System.Net.NetworkCredential("laboratorio@colaveco.com.uy", "19912021Laboratorio")
+            _SMTP.Credentials = New System.Net.NetworkCredential("laboratorio@colaveco.com.uy", "C1nIpB{tFYvp")
             _SMTP.Host = "170.249.199.66"
             _SMTP.Port = 25
             _SMTP.EnableSsl = False
@@ -16035,7 +16035,7 @@ controltxt:
         If Not String.IsNullOrEmpty(email) And String.IsNullOrEmpty(email2) Then
 
             'CONFIGURACIÓN DEL STMP 
-            _SMTP.Credentials = New System.Net.NetworkCredential("notificaciones@colaveco.com.uy", "J]e5$5c2(Qnl")
+            _SMTP.Credentials = New System.Net.NetworkCredential("notificaciones@colaveco.com.uy", "-]$]Mo8z1kr3")
             _SMTP.Host = "170.249.199.66"
             _SMTP.Port = 25
             _SMTP.EnableSsl = False
@@ -16148,7 +16148,7 @@ controltxt:
         If Not String.IsNullOrEmpty(email) And String.IsNullOrEmpty(email2) Then
 
             'CONFIGURACIÓN DEL STMP 
-            _SMTP.Credentials = New System.Net.NetworkCredential("notificaciones@colaveco.com.uy", "J]e5$5c2(Qnl")
+            _SMTP.Credentials = New System.Net.NetworkCredential("notificaciones@colaveco.com.uy", "-]$]Mo8z1kr3")
             _SMTP.Host = "170.249.199.66"
             _SMTP.Port = 25
             _SMTP.EnableSsl = False
@@ -16221,7 +16221,7 @@ controltxt:
         If _email <> "" And _email <> "No aportado" And _email <> "no aportado" Then
             If _adjunto <> "" Then
                 'CONFIGURACIÓN DEL STMP 
-                _SMTP.Credentials = New System.Net.NetworkCredential("notificaciones@colaveco.com.uy", "J]e5$5c2(Qnl")
+                _SMTP.Credentials = New System.Net.NetworkCredential("notificaciones@colaveco.com.uy", "-]$]Mo8z1kr3")
                 _SMTP.Host = "170.249.199.66"
                 _SMTP.Port = 25
                 _SMTP.EnableSsl = False
@@ -16255,7 +16255,7 @@ controltxt:
                 End Try
             Else
                 'CONFIGURACIÓN DEL STMP 
-                _SMTP.Credentials = New System.Net.NetworkCredential("notificaciones@colaveco.com.uy", "J]e5$5c2(Qnl")
+                _SMTP.Credentials = New System.Net.NetworkCredential("notificaciones@colaveco.com.uy", "-]$]Mo8z1kr3")
                 _SMTP.Host = "170.249.199.66"
                 _SMTP.Port = 25
                 _SMTP.EnableSsl = False
@@ -16298,7 +16298,7 @@ controltxt:
         Dim _adjunto As String = ""
 
         'CONFIGURACIÓN DEL STMP 
-        _SMTP.Credentials = New System.Net.NetworkCredential("notificaciones@colaveco.com.uy", "J]e5$5c2(Qnl")
+        _SMTP.Credentials = New System.Net.NetworkCredential("notificaciones@colaveco.com.uy", "-]$]Mo8z1kr3")
         _SMTP.Host = "170.249.199.66"
         _SMTP.Port = 25
         _SMTP.EnableSsl = False
@@ -17073,7 +17073,7 @@ controltxt:
                         If Not c Is Nothing Then
                             If c.CRIOSCOPIA <> -1 Then
                                 Dim valcrioscopia As Double = Val(c.CRIOSCOPIA) * -1 / 1000
-                                If valcrioscopia > -0.51 Or valcrioscopia < -0.54 Then
+                                If valcrioscopia > -0.512 And valcrioscopia < 0 Then
                                     x1hoja.Cells(fila, columna).interior.color = RGB(192, 192, 192)
                                 End If
                                 x1hoja.Cells(fila, columna).formula = valcrioscopia.ToString("##,##0.000")
